@@ -1,4 +1,5 @@
 package me.moritz;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -55,20 +56,22 @@ public class Oberflaeche extends JFrame {
 	btnNewButton.setFocusable(false);
 
 	// DEBUG
-	addKeyListener(new KeyAdapter() {
-	    @Override
-	    public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_D:
-		    redX++;
-		    break;
+	// addKeyListener(new KeyAdapter() {
+	// @Override
+	// public void keyPressed(KeyEvent e) {
+	// switch (e.getKeyCode()) {
+	// case KeyEvent.VK_D:
+	// redX++;
+	// break;
+	//
+	// case KeyEvent.VK_S:
+	// redY++;
+	// break;
+	// }
+	// }
+	// });
 
-		case KeyEvent.VK_S:
-		    redY++;
-		    break;
-		}
-	    }
-	});
+	addKeyListener(this.dieSteuerung.getKeyadapter());
 
 	contentPane = new Spielfeld(this);
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

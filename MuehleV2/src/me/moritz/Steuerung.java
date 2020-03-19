@@ -1,7 +1,9 @@
 package me.moritz;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.SwingUtilities;
 
@@ -12,10 +14,22 @@ public class Steuerung implements Runnable {
 
     // ATTRIBUTE
     private Oberflaeche dieOberflaeche;
+    private KeyAdapter keyadapter;
 
     // KONSTRUKTOR
     public Steuerung() {
 	this.dieOberflaeche = new Oberflaeche(this);
+	// tastatur
+	this.keyadapter = new KeyAdapter() {
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_SPACE:
+		    System.out.println("space");
+		    break;
+		}
+	    }
+	};
     }
 
     // METHODEN
@@ -43,5 +57,9 @@ public class Steuerung implements Runnable {
 
     public Oberflaeche getDieOberflaeche() {
 	return dieOberflaeche;
+    }
+
+    public KeyAdapter getKeyadapter() {
+	return this.keyadapter;
     }
 }

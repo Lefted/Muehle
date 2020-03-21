@@ -70,6 +70,10 @@ public class Oberflaeche extends JFrame {
 	SwingUtilities.updateComponentTreeUI(this);
     }
 
+    public Steuerung getDieSteuerung() {
+	return this.dieSteuerung;
+    }
+    
     public JButton getBtnSpielStarten() {
 	return btnSpielStarten;
     }

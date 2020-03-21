@@ -59,4 +59,8 @@ public class Steuerung implements Runnable {
 	this.dieOberflaeche.getBtnSpielStarten().setVisible(false);
 	this.spielzustand = Spielzustand.SPIELEN;
     }
+    
+    public Spielzustand getSpielzustand() {
+	return this.spielzustand;
+    }
 }

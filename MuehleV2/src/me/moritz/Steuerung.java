@@ -12,28 +12,18 @@ public class Steuerung implements Runnable {
 
     // ATTRIBUTE
     private Oberflaeche dieOberflaeche;
-    private KeyAdapter keyadapter;
+    private Spielzustand spielzustand = Spielzustand.MENU;
 
     // KONSTRUKTOR
     public Steuerung() {
 	this.dieOberflaeche = new Oberflaeche(this);
-	// tastatur
-	this.keyadapter = new KeyAdapter() {
-	    @Override
-	    public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_SPACE:
-		    System.out.println("space");
-		    break;
-		}
-	    }
-	};
     }
 
     // METHODEN
     @Override
     public void run() {
-	System.out.println("Is game thread EDT? " + SwingUtilities.isEventDispatchThread());
+	// DEBUG
+	System.out.println("Wurde das Spiel auf dem EDT erstellt? " + SwingUtilities.isEventDispatchThread());
 	// Das Spiel der FPS-Rate nach aktualisieren
 	double timePerTick = 1000000000 / FPS_RATE;
 	double delta = 0;
@@ -46,18 +36,27 @@ public class Steuerung implements Runnable {
 	    lastTime = now;
 
 	    if (delta >= 1) {
-		// tick();
+		// Spielogik
+		this.tick();
+		// Zeichen siehe Spielfeld.paintComponent()
 		this.dieOberflaeche.repaint();
 		delta--;
 	    }
 	}
     }
 
+    // Spiellogik wird jeden Zyklus aufgerufen
+    private void tick() {
+
+    }
+
     public Oberflaeche getDieOberflaeche() {
 	return dieOberflaeche;
     }
 
-    public KeyAdapter getKeyadapter() {
-	return this.keyadapter;
+    // setzt den Spielzustand auf Spielen und versteckt das Menu
+    public void setSpielzustandSpielen() {
+	this.dieOberflaeche.getBtnSpielStarten().setVisible(false);
+	this.spielzustand = Spielzustand.SPIELEN;
     }
 }

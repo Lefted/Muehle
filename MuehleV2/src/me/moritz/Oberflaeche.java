@@ -1,9 +1,16 @@
 package me.moritz;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 public class Oberflaeche extends JFrame {
@@ -15,63 +22,55 @@ public class Oberflaeche extends JFrame {
     // ATTRIBUTE
     private JPanel contentPane;
     private Steuerung dieSteuerung;
-
-    // DEBUG
-    private int redX = 50;
-
-    private int redY = 50;
-
-    public int getRedX() {
-	return redX;
-    }
-
-    public int getRedY() {
-	return redY;
-    }
+    private JButton btnSpielStarten;
 
     // KONSTRUKTOR
     public Oberflaeche(Steuerung dieSteuerung) {
 	this.dieSteuerung = dieSteuerung;
     }
 
-    // CREATE
+    // METHODEN
     public void createAndShowGui() {
-	System.out.println("Is Gui created on EDT? " + SwingUtilities.isEventDispatchThread());
+	// DEBUG
+	System.out.println("Wurde die GUI auf dem EDT erstellt? " + SwingUtilities.isEventDispatchThread());
 
 	setTitle("Mühle V1");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	JButton btnNewButton = new JButton("Ein Button");
-	btnNewButton.setBounds(131, 382, 89, 23);
-	btnNewButton.setFocusable(false);
-
+	// Components
+	this.btnSpielStarten = new JButton("Spiel starten");
+	this.btnSpielStarten.setBounds(300, 180, 200, 40);
 	// DEBUG
-	// addKeyListener(new KeyAdapter() {
-	// @Override
-	// public void keyPressed(KeyEvent e) {
-	// switch (e.getKeyCode()) {
-	// case KeyEvent.VK_D:
-	// redX++;
-	// break;
-	//
-	// case KeyEvent.VK_S:
-	// redY++;
-	// break;
-	// }
-	// }
-	// });
+	// btnSpielStarten.setFocusable(false);
+	this.btnSpielStarten.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		dieSteuerung.setSpielzustandSpielen();
+	    }
+	});
 
-	addKeyListener(this.dieSteuerung.getKeyadapter());
-
+	// Spielfeld
 	contentPane = new Spielfeld(this);
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	contentPane.setLayout(null);
 	setContentPane(contentPane);
-	contentPane.add(btnNewButton);
+	contentPane.add(btnSpielStarten);
 
 	// Fenstergröße je nach Spielfeldgröße setzen
 	pack();
 	setLocationRelativeTo(null);
 	setVisible(true);
+
+	// schöneres Aussehen anwenden
+	try {
+	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+	    e.printStackTrace();
+	}
+	SwingUtilities.updateComponentTreeUI(this);
+    }
+
+    public JButton getBtnSpielStarten() {
+	return btnSpielStarten;
     }
 }

@@ -36,13 +36,14 @@ public class Oberflaeche extends JFrame {
 
 	setTitle("Mühle V1");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setResizable(false);
 
 	// Components
-	this.btnSpielStarten = new JButton("Spiel starten");
-	this.btnSpielStarten.setBounds(300, 180, 200, 40);
+	btnSpielStarten = new JButton("Spiel starten");
+	btnSpielStarten.setBounds(300, 180, 200, 40);
 	// DEBUG
 	// btnSpielStarten.setFocusable(false);
-	this.btnSpielStarten.addActionListener(new ActionListener() {
+	btnSpielStarten.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		dieSteuerung.setSpielzustandSpielen();
@@ -71,9 +72,9 @@ public class Oberflaeche extends JFrame {
     }
 
     public Steuerung getDieSteuerung() {
-	return this.dieSteuerung;
+	return dieSteuerung;
     }
-    
+
     public JButton getBtnSpielStarten() {
 	return btnSpielStarten;
     }

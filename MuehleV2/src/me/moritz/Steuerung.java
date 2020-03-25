@@ -16,7 +16,7 @@ public class Steuerung implements Runnable {
 
     // KONSTRUKTOR
     public Steuerung() {
-	this.dieOberflaeche = new Oberflaeche(this);
+	dieOberflaeche = new Oberflaeche(this);
     }
 
     // METHODEN
@@ -37,9 +37,9 @@ public class Steuerung implements Runnable {
 
 	    if (delta >= 1) {
 		// Spielogik
-		this.tick();
+		tick();
 		// Zeichen siehe Spielfeld.paintComponent()
-		this.dieOberflaeche.repaint();
+		dieOberflaeche.repaint();
 		delta--;
 	    }
 	}
@@ -56,11 +56,11 @@ public class Steuerung implements Runnable {
 
     // setzt den Spielzustand auf Spielen und versteckt das Menu
     public void setSpielzustandSpielen() {
-	this.dieOberflaeche.getBtnSpielStarten().setVisible(false);
-	this.spielzustand = Spielzustand.SPIELEN;
+	dieOberflaeche.getBtnSpielStarten().setVisible(false);
+	spielzustand = Spielzustand.SPIELEN;
     }
     
     public Spielzustand getSpielzustand() {
-	return this.spielzustand;
+	return spielzustand;
     }
 }

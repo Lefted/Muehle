@@ -3,9 +3,9 @@ package me.moritz;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -96,6 +96,9 @@ public class Spielfeld extends JPanel {
 	return new Dimension(Oberflaeche.PANE_WIDTH, Oberflaeche.PANE_HEIGHT);
     }
 
+    private BufferedImage steinSchwarz  = Utilities.ladeBild("/SteinSchwarz.png");
+    private BufferedImage steinWeiss  = Utilities.ladeBild("/SteinWeiﬂ.png");
+    
     // zeichnen
     @Override
     protected void paintComponent(Graphics g) {
@@ -114,8 +117,13 @@ public class Spielfeld extends JPanel {
 	g.fillRect(0, 0, 960, 960);
 
 	// Spielfeld Hintergrund zeichnen
-	g.drawImage(Utilities.ladeBild("/spielfeld730Pixelart3.png"), 115, 115, this);
+	g.drawImage(Utilities.ladeBild("/spielfeld.png"), 115, 115, this);
 
+	
+	// DEBUG
+	// Stein zeichnen
+	g.drawImage(steinSchwarz, 150 - 32, 815 - 32	, 64, 64, this);
+	g.drawImage(steinWeiss, 150 - 32, 480 - 32	, 64, 64, this);
 	// DEBUG
 	// Knotenpunkte zeichnen
 	for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {

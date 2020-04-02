@@ -28,7 +28,7 @@ public class Spielfeld extends JPanel {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 		// DEBUG
-		System.out.println("x:" + e.getX() + " y:" + e.getY());
+		// System.out.println("x:" + e.getX() + " y:" + e.getY());
 
 		// DEBUG
 		// Knotenpunkte zeichnen
@@ -58,36 +58,36 @@ public class Spielfeld extends JPanel {
 	});
 
 	// Knotenpunkte erstellen
-	dieKnotenpunkte[0] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[1] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[2] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[3] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[4] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[5] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[0] = new Knotenpunkt(this, 150 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[1] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[2] = new Knotenpunkt(this, 815 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[3] = new Knotenpunkt(this, 260 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[4] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[5] = new Knotenpunkt(this, 700 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[6] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[7] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[8] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[6] = new Knotenpunkt(this, 370 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[7] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[8] = new Knotenpunkt(this, 590 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[9] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[10] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[11] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[9] = new Knotenpunkt(this, 150 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[10] = new Knotenpunkt(this, 260 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[11] = new Knotenpunkt(this, 370 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[12] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[13] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[14] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[12] = new Knotenpunkt(this, 590 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[13] = new Knotenpunkt(this, 700 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[14] = new Knotenpunkt(this, 815 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[15] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[16] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[17] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[15] = new Knotenpunkt(this, 370 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[16] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[17] = new Knotenpunkt(this, 590 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[18] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[19] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[20] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[18] = new Knotenpunkt(this, 260 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[19] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[20] = new Knotenpunkt(this, 700 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
 
-	dieKnotenpunkte[21] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[22] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
-	dieKnotenpunkte[23] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[21] = new Knotenpunkt(this, 150 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[22] = new Knotenpunkt(this, 480 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[23] = new Knotenpunkt(this, 815 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
     }
 
     // METHODEN
@@ -96,9 +96,9 @@ public class Spielfeld extends JPanel {
 	return new Dimension(Oberflaeche.PANE_WIDTH, Oberflaeche.PANE_HEIGHT);
     }
 
-    private BufferedImage steinSchwarz  = Utilities.ladeBild("/SteinSchwarz.png");
-    private BufferedImage steinWeiss  = Utilities.ladeBild("/SteinWeiﬂ.png");
-    
+    private BufferedImage steinSchwarz = Utilities.ladeBild("/SteinSchwarz.png");
+    private BufferedImage steinWeiss = Utilities.ladeBild("/SteinWeiﬂ.png");
+
     // zeichnen
     @Override
     protected void paintComponent(Graphics g) {
@@ -119,11 +119,10 @@ public class Spielfeld extends JPanel {
 	// Spielfeld Hintergrund zeichnen
 	g.drawImage(Utilities.ladeBild("/spielfeld.png"), 115, 115, this);
 
-	
 	// DEBUG
 	// Stein zeichnen
-	g.drawImage(steinSchwarz, 150 - 32, 815 - 32	, 64, 64, this);
-	g.drawImage(steinWeiss, 150 - 32, 480 - 32	, 64, 64, this);
+	// g.drawImage(steinSchwarz, 150 - 32, 815 - 32, 64, 64, this);
+	// g.drawImage(steinWeiss, 150 - 32, 480 - 32, 64, 64, this);
 	// DEBUG
 	// Knotenpunkte zeichnen
 	for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {

@@ -13,15 +13,26 @@ public class Knotenpunkt {
     private int x;
     private int y;
     private Color farbe;
+    private Stein stein;
+    private Spielfeld dasSpielfeld;
 
+    // DEBUG
+    static int i = 0;
+    
     // KONSTRUKTOR
-    public Knotenpunkt(int x, int y) {
-	super();
+    public Knotenpunkt(Spielfeld dasSpielfeld, int x, int y) {
+	this.dasSpielfeld = dasSpielfeld;
 	this.x = x;
 	this.y = y;
+	farbe = new Color(1F, 1F, 1F, 0.5F);
 
 	// DEBUG
-	farbe = new Color(1F, 1F, 1F, 0.5F);
+	if (i < 4 && i != 2) {
+	    stein = new Stein(Farbe.WEISS);
+	} else if (i != 2){
+	    stein = new Stein(Farbe.SCHWARZ);
+	}
+	i++;
     }
 
     // METHODEN
@@ -34,6 +45,11 @@ public class Knotenpunkt {
 
     // DEBUG
     public void zeichnen(Graphics g) {
+	// wenn stein auf knotenpunkt ist, zeichnen
+	if (stein != null) {
+	    stein.zeichnen(dasSpielfeld, g, x, y);
+	}
+	
 	g.setColor(farbe);
 	g.fillRect(x, y, WIDTH, HEIGHT);
     }
@@ -52,5 +68,13 @@ public class Knotenpunkt {
 
     public void setFarbe(Color farbe) {
 	this.farbe = farbe;
+    }
+
+    public Stein getStein() {
+	return stein;
+    }
+
+    public void setStein(Stein stein) {
+	this.stein = stein;
     }
 }

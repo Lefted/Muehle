@@ -41,8 +41,7 @@ public class Oberflaeche extends JFrame {
 	// Components
 	btnSpielStarten = new JButton("Spiel starten");
 	btnSpielStarten.setBounds(300, 180, 200, 40);
-	// DEBUG
-	// btnSpielStarten.setFocusable(false);
+	btnSpielStarten.setFocusable(false);	// damit der KeyListener richtig funktioniert
 	btnSpielStarten.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
@@ -59,6 +58,7 @@ public class Oberflaeche extends JFrame {
 
 	// Fenstergröße je nach Spielfeldgröße setzen
 	pack();
+	// Fenster in die Mite des Screens
 	setLocationRelativeTo(null);
 	setVisible(true);
 

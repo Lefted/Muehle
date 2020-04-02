@@ -16,8 +16,8 @@ import javax.swing.border.EmptyBorder;
 public class Oberflaeche extends JFrame {
 
     // KONSTANTEN
-    public static final int PANE_WIDTH = 810;
-    public static final int PANE_HEIGHT = 810;
+    public static final int PANE_WIDTH = 960;
+    public static final int PANE_HEIGHT = 960;
 
     // ATTRIBUTE
     private JPanel contentPane;

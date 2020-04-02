@@ -3,14 +3,10 @@ package me.moritz;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Spielfeld extends JPanel {
@@ -32,14 +28,14 @@ public class Spielfeld extends JPanel {
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
 		// DEBUG
-		// System.out.println("x:" + e.getX() + " y:" + e.getY());
+		System.out.println("x:" + e.getX() + " y:" + e.getY());
 
 		// DEBUG
 		// Knotenpunkte zeichnen
 		for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {
 		    if (knotenpunkt != null) {
 			if (knotenpunkt.istMausÜber(e.getX(), e.getY())) {
-			    System.out.println("Knotenpunkt geklickt");
+			    // System.out.println("Knotenpunkt geklickt");
 			}
 		    }
 		}
@@ -52,9 +48,9 @@ public class Spielfeld extends JPanel {
 		for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {
 		    if (knotenpunkt != null) {
 			if (knotenpunkt.istMausÜber(e.getX(), e.getY())) {
-			    knotenpunkt.setFarbe(Color.BLUE);
+			    knotenpunkt.setFarbe(new Color(255, 255, 204, 123));
 			} else {
-			    knotenpunkt.setFarbe(Color.RED);
+			    knotenpunkt.setFarbe(new Color(1F, 1F, 1F, 0F));
 			}
 		    }
 		}
@@ -62,8 +58,36 @@ public class Spielfeld extends JPanel {
 	});
 
 	// Knotenpunkte erstellen
-	dieKnotenpunkte[0] = new Knotenpunkt(150, 50);
-	dieKnotenpunkte[1] = new Knotenpunkt(230 - 12, 290 - 12);
+	dieKnotenpunkte[0] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[1] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[2] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 145 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[3] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[4] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[5] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 260 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[6] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[7] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[8] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 370 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[9] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[10] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[11] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[12] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[13] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[14] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 480 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[15] = new Knotenpunkt(370 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[16] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[17] = new Knotenpunkt(590 - Knotenpunkt.WIDTH / 2, 590 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[18] = new Knotenpunkt(260 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[19] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[20] = new Knotenpunkt(700 - Knotenpunkt.WIDTH / 2, 700 - Knotenpunkt.HEIGHT / 2);
+
+	dieKnotenpunkte[21] = new Knotenpunkt(150 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[22] = new Knotenpunkt(480 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
+	dieKnotenpunkte[23] = new Knotenpunkt(815 - Knotenpunkt.WIDTH / 2, 815 - Knotenpunkt.HEIGHT / 2);
     }
 
     // METHODEN
@@ -86,13 +110,11 @@ public class Spielfeld extends JPanel {
 	    return;
 	}
 
+	g.setColor(new Color(0xFFFFCC));
+	g.fillRect(0, 0, 960, 960);
+
 	// Spielfeld Hintergrund zeichnen
-	
-	// für pane 800 600
-//	g.drawImage(Utilities.ladeBild("/spielfeld1200.png"), 140, 40, 520, 520, this);
-//	g.drawImage(Utilities.ladeBild("/spielfeld810.png"), 0, 0, this);
-	g.drawImage(Utilities.ladeBild("/spielfeld730.png"), 40, 40, this);
-	
+	g.drawImage(Utilities.ladeBild("/spielfeld730Pixelart3.png"), 115, 115, this);
 
 	// DEBUG
 	// Knotenpunkte zeichnen

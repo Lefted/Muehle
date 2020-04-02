@@ -6,19 +6,22 @@ import java.awt.Graphics;
 public class Knotenpunkt {
 
     // KONSTANTEN
-    public static final int WIDTH = 48;
-    public static final int HEIGHT = 48;
+    public static final int WIDTH = 64;
+    public static final int HEIGHT = 64;
 
     // ATTRIBUTE
     private int x;
     private int y;
-    private Color farbe = Color.RED;
+    private Color farbe;
 
     // KONSTRUKTOR
     public Knotenpunkt(int x, int y) {
 	super();
 	this.x = x;
 	this.y = y;
+
+	// DEBUG
+	farbe = new Color(1F, 1F, 1F, 0.5F);
     }
 
     // METHODEN

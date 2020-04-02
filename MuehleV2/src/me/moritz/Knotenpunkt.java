@@ -29,7 +29,7 @@ public class Knotenpunkt {
 	// DEBUG
 	if (i < 4 && i != 2) {
 	    stein = new Stein(Farbe.WEISS);
-	} else if (i != 2){
+	} else if (i != 2 && i < 10){
 	    stein = new Stein(Farbe.SCHWARZ);
 	}
 	i++;

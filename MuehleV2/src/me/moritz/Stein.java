@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 public class Stein {
 
     // KONSTANTEN
-    private static BufferedImage imgSteinSchwarz = Utilities.ladeBild("/steinSchwarz.png");
-    private static BufferedImage imgSteinWeiss = Utilities.ladeBild("/steinWeiﬂ.png");
+    private static BufferedImage imgSteinSchwarz = Utilities.ladeBild("/steinSchwarz3.png");
+    private static BufferedImage imgSteinWeiss = Utilities.ladeBild("/steinWeiﬂ2.png");
 
     // ATTRIBUTE
     private final Farbe farbe;

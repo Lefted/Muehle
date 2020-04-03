@@ -107,7 +107,7 @@ public class Spielfeld extends JPanel {
 
 	// Alles vorher Gezeichnete löschen
 	g.clearRect(0, 0, Oberflaeche.PANE_WIDTH, Oberflaeche.PANE_HEIGHT);
-
+	
 	// Wenn im Menu oder Farbwahl nicht zeichnen
 	if (dieSteuerung.getSpielzustand() == Spielzustand.MENU || dieSteuerung.getSpielzustand() == Spielzustand.FARBWAHL) {
 	    return;

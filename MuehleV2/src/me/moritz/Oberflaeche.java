@@ -27,6 +27,7 @@ public class Oberflaeche extends JFrame {
     private JButton btnSpielStarten;
     private JRadioButton btnFarbwahl1; // Spieler 1 hat schwarze Steine, 2 weiﬂe
     private JRadioButton btnFarbwahl2; // Spieler 2 hat weiﬂe Steine, 1 schwarze
+    private JButton btnFarbwahlBestaetigen;
 
     // KONSTRUKTOR
     public Oberflaeche(Steuerung dieSteuerung) {
@@ -45,7 +46,7 @@ public class Oberflaeche extends JFrame {
 	// Components
 	// Starten Button
 	btnSpielStarten = new JButton("Spiel starten");
-	btnSpielStarten.setBounds(300, 180, 200, 40);
+	btnSpielStarten.setBounds(PANE_WIDTH / 2 - 100, 200, 200, 40);
 	btnSpielStarten.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
@@ -56,18 +57,19 @@ public class Oberflaeche extends JFrame {
 	// Farbwahl Radiobuttons
 	btnFarbwahl1 = new JRadioButton("Spieler 1 schwarze Steine, Spieler 2 weiﬂe Steine");
 	btnFarbwahl2 = new JRadioButton("Spieler 1 weiﬂe Steine, Spieler 2 schwarze Steine");
-	btnFarbwahl1.setBounds(40, 40, 260, 20);
-	btnFarbwahl2.setBounds(40, 60, 260, 20);
+	btnFarbwahl1.setBounds(PANE_WIDTH / 2 - 130, 120, 260, 20);
+	btnFarbwahl2.setBounds(PANE_WIDTH / 2 - 130, 150, 260, 20);
 
-	// DEBUG
-	btnFarbwahl2.addActionListener(new ActionListener() {
-	    
+	// Farbwahl best‰tigen
+	btnFarbwahlBestaetigen = new JButton("Ok");
+	btnFarbwahlBestaetigen.setBounds(PANE_WIDTH / 2 - 100, 200, 200, 40);
+	btnFarbwahlBestaetigen.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
 		dieSteuerung.setSpielzustandSpielen();
 	    }
 	});
-	
+
 	ButtonGroup groupFarbwahl = new ButtonGroup();
 	groupFarbwahl.add(btnFarbwahl1);
 	groupFarbwahl.add(btnFarbwahl2);
@@ -81,6 +83,7 @@ public class Oberflaeche extends JFrame {
 	contentPane.add(btnSpielStarten);
 	contentPane.add(btnFarbwahl1);
 	contentPane.add(btnFarbwahl2);
+	contentPane.add(btnFarbwahlBestaetigen);
 
 	// Spielzustand anfangs auf Men¸ setzen
 	dieSteuerung.setSpielzustandMenu();
@@ -114,5 +117,9 @@ public class Oberflaeche extends JFrame {
 
     public JRadioButton getBtnFarbwahl2() {
 	return btnFarbwahl2;
+    }
+
+    public JButton getBtnFarbwahlBestaetigen() {
+        return btnFarbwahlBestaetigen;
     }
 }

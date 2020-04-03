@@ -50,16 +50,14 @@ public class Steuerung implements Runnable {
 
     }
 
-    public Oberflaeche getDieOberflaeche() {
-	return dieOberflaeche;
-    }
-
     // setzt den Spielzustand auf Farbwahl und stellt die Components ein
     public void setSpielzustandFarbwahl() {
 	dieOberflaeche.getBtnSpielStarten().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl2().setVisible(true);
 	dieOberflaeche.getBtnFarbwahl1().setVisible(true);
+	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(true);
 	
+	// Standartwahl Spieler 1 schwarz, Spieler 2 weiﬂ
 	dieOberflaeche.getBtnFarbwahl1().setSelected(true);
 
 	spielzustand = Spielzustand.FARBWAHL;
@@ -69,6 +67,7 @@ public class Steuerung implements Runnable {
     public void setSpielzustandSpielen() {
 	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
+	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(false);
 
 	spielzustand = Spielzustand.SPIELEN;
     }
@@ -77,11 +76,16 @@ public class Steuerung implements Runnable {
     public void setSpielzustandMenu() {
 	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
-
+	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(false);
+	
 	spielzustand = Spielzustand.MENU;
     }
 
     public Spielzustand getSpielzustand() {
 	return spielzustand;
+    }
+
+    public Oberflaeche getDieOberflaeche() {
+	return dieOberflaeche;
     }
 }

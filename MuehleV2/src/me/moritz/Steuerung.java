@@ -54,12 +54,33 @@ public class Steuerung implements Runnable {
 	return dieOberflaeche;
     }
 
-    // setzt den Spielzustand auf Spielen und versteckt das Menu
-    public void setSpielzustandSpielen() {
+    // setzt den Spielzustand auf Farbwahl und stellt die Components ein
+    public void setSpielzustandFarbwahl() {
 	dieOberflaeche.getBtnSpielStarten().setVisible(false);
+	dieOberflaeche.getBtnFarbwahl2().setVisible(true);
+	dieOberflaeche.getBtnFarbwahl1().setVisible(true);
+	
+	dieOberflaeche.getBtnFarbwahl1().setSelected(true);
+
+	spielzustand = Spielzustand.FARBWAHL;
+    }
+
+    // setzt den Spielzustand auf Spielen und versteckt die Farbwahl
+    public void setSpielzustandSpielen() {
+	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
+	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
+
 	spielzustand = Spielzustand.SPIELEN;
     }
-    
+
+    // setzt den Spielzustand auf Menu und stellt die Components ein
+    public void setSpielzustandMenu() {
+	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
+	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
+
+	spielzustand = Spielzustand.MENU;
+    }
+
     public Spielzustand getSpielzustand() {
 	return spielzustand;
     }

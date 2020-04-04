@@ -27,7 +27,9 @@ public class Oberflaeche extends JFrame {
     private JButton btnSpielStarten;
     private JRadioButton btnFarbwahl1; // Spieler 1 hat schwarze Steine, 2 weiße
     private JRadioButton btnFarbwahl2; // Spieler 2 hat weiße Steine, 1 schwarze
-    private JButton btnFarbwahlBestaetigen;
+    private JRadioButton btnStartreihenfolge1; // Spieler 1 beginnt
+    private JRadioButton btnStartreihenfolge2; // Spieler 2 beginnt
+    private JButton btnEinstellungenBestaetigen;
 
     // KONSTRUKTOR
     public Oberflaeche(Steuerung dieSteuerung) {
@@ -50,7 +52,7 @@ public class Oberflaeche extends JFrame {
 	btnSpielStarten.addActionListener(new ActionListener() {
 	    @Override
 	    public void actionPerformed(ActionEvent e) {
-		dieSteuerung.setSpielzustandFarbwahl();
+		dieSteuerung.setMenuzustandEinstellungen();
 	    }
 	});
 
@@ -60,19 +62,29 @@ public class Oberflaeche extends JFrame {
 	btnFarbwahl1.setBounds(PANE_WIDTH / 2 - 130, 120, 260, 20);
 	btnFarbwahl2.setBounds(PANE_WIDTH / 2 - 130, 150, 260, 20);
 
-	// Farbwahl bestätigen
-	btnFarbwahlBestaetigen = new JButton("Ok");
-	btnFarbwahlBestaetigen.setBounds(PANE_WIDTH / 2 - 100, 200, 200, 40);
-	btnFarbwahlBestaetigen.addActionListener(new ActionListener() {
-	    @Override
-	    public void actionPerformed(ActionEvent e) {
-		dieSteuerung.setSpielzustandSpielen();
-	    }
-	});
-
 	ButtonGroup groupFarbwahl = new ButtonGroup();
 	groupFarbwahl.add(btnFarbwahl1);
 	groupFarbwahl.add(btnFarbwahl2);
+
+	// Startreihenfolge Radiobuttons
+	btnStartreihenfolge1 = new JRadioButton("Spieler 1 beginnt");
+	btnStartreihenfolge2 = new JRadioButton("Spieler 2 beginnt");
+	btnStartreihenfolge1.setBounds(PANE_WIDTH / 2 - 130, 200, 260, 20);
+	btnStartreihenfolge2.setBounds(PANE_WIDTH / 2 - 130, 230, 260, 20);
+
+	ButtonGroup groupStartreihenfolge = new ButtonGroup();
+	groupStartreihenfolge.add(btnStartreihenfolge1);
+	groupStartreihenfolge.add(btnStartreihenfolge2);
+
+	// Einstellungen bestätigen
+	btnEinstellungenBestaetigen = new JButton("Ok");
+	btnEinstellungenBestaetigen.setBounds(PANE_WIDTH / 2 - 100, 280, 200, 40);
+	btnEinstellungenBestaetigen.addActionListener(new ActionListener() {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+		dieSteuerung.setMenuzustandSpielen();
+	    }
+	});
 
 	// Spielfeld
 	contentPane = new Spielfeld(this);
@@ -83,7 +95,9 @@ public class Oberflaeche extends JFrame {
 	contentPane.add(btnSpielStarten);
 	contentPane.add(btnFarbwahl1);
 	contentPane.add(btnFarbwahl2);
-	contentPane.add(btnFarbwahlBestaetigen);
+	contentPane.add(btnStartreihenfolge1);
+	contentPane.add(btnStartreihenfolge2);
+	contentPane.add(btnEinstellungenBestaetigen);
 
 	// Spielzustand anfangs auf Menü setzen
 	dieSteuerung.setSpielzustandMenu();
@@ -119,7 +133,15 @@ public class Oberflaeche extends JFrame {
 	return btnFarbwahl2;
     }
 
-    public JButton getBtnFarbwahlBestaetigen() {
-        return btnFarbwahlBestaetigen;
+    public JButton getBtnEinstellungenBestaetigen() {
+	return btnEinstellungenBestaetigen;
+    }
+
+    public JRadioButton getBtnStartreihenfolge1() {
+	return btnStartreihenfolge1;
+    }
+
+    public JRadioButton getBtnStartreihenfolge2() {
+	return btnStartreihenfolge2;
     }
 }

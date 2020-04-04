@@ -12,7 +12,8 @@ public class Steuerung implements Runnable {
 
     // ATTRIBUTE
     private Oberflaeche dieOberflaeche;
-    private Spielzustand spielzustand = Spielzustand.MENU;
+    private Zustand menuzustand = Zustand.MENU;
+    private Zustand spielzustand;
 
     // KONSTRUKTOR
     public Steuerung() {
@@ -50,41 +51,53 @@ public class Steuerung implements Runnable {
 
     }
 
-    // setzt den Spielzustand auf Farbwahl und stellt die Components ein
-    public void setSpielzustandFarbwahl() {
+    // setzt den Menuzustand auf Einstellungen (Farbwahl,Startreihenfolge) und stellt die Components ein
+    public void setMenuzustandEinstellungen() {
 	dieOberflaeche.getBtnSpielStarten().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl2().setVisible(true);
 	dieOberflaeche.getBtnFarbwahl1().setVisible(true);
-	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(true);
+	dieOberflaeche.getBtnStartreihenfolge1().setVisible(true);
+	dieOberflaeche.getBtnStartreihenfolge2().setVisible(true);
+	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(true);
 	
-	// Standartwahl Spieler 1 schwarz, Spieler 2 weiﬂ
+	// Standartwahl der Farbwahl: Spieler 1 schwarz, Spieler 2 weiﬂ
 	dieOberflaeche.getBtnFarbwahl1().setSelected(true);
+	// Standartwahl der Startreihenfolge: Spieler 1 beginnt
+	dieOberflaeche.getBtnStartreihenfolge1().setSelected(true);
 
-	spielzustand = Spielzustand.FARBWAHL;
+	menuzustand = Zustand.EINSTELLUNGEN;
     }
 
-    // setzt den Spielzustand auf Spielen und versteckt die Farbwahl
-    public void setSpielzustandSpielen() {
+    // setzt den Menuzustand auf Spielen und versteckt die Farbwahl
+    public void setMenuzustandSpielen() {
 	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
-	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(false);
+	dieOberflaeche.getBtnStartreihenfolge1().setVisible(false);
+	dieOberflaeche.getBtnStartreihenfolge2().setVisible(false);
+	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(false);
 
-	spielzustand = Spielzustand.SPIELEN;
+	menuzustand = Zustand.SPIELEN;
     }
 
-    // setzt den Spielzustand auf Menu und stellt die Components ein
+    // setzt den Menuzustand auf Menu und stellt die Components ein
     public void setSpielzustandMenu() {
 	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
-	dieOberflaeche.getBtnFarbwahlBestaetigen().setVisible(false);
+	dieOberflaeche.getBtnStartreihenfolge1().setVisible(false);
+	dieOberflaeche.getBtnStartreihenfolge2().setVisible(false);
+	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(false);
 	
-	spielzustand = Spielzustand.MENU;
+	menuzustand = Zustand.MENU;
     }
 
-    public Spielzustand getSpielzustand() {
+    public Zustand getMenuzustand() {
+	return menuzustand;
+    }
+
+    public Zustand getSpielzustand() {
 	return spielzustand;
     }
-
+    
     public Oberflaeche getDieOberflaeche() {
 	return dieOberflaeche;
     }

@@ -25,14 +25,6 @@ public class Knotenpunkt {
 	this.x = x;
 	this.y = y;
 	farbe = new Color(1F, 1F, 1F, 0.5F);
-
-	// DEBUG
-	if (i < 4 && i != 2) {
-	    stein = new Stein(Farbe.WEISS);
-	} else if (i != 2 && i < 10){
-	    stein = new Stein(Farbe.SCHWARZ);
-	}
-	i++;
     }
 
     // METHODEN

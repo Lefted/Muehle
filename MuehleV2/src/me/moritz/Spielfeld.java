@@ -92,9 +92,12 @@ public class Spielfeld extends JPanel {
 	return new Dimension(Oberflaeche.PANE_WIDTH, Oberflaeche.PANE_HEIGHT);
     }
 
+    // DEBUG
     private BufferedImage steinSchwarz = Utilities.ladeBild("/SteinSchwarz.png");
     private BufferedImage steinWeiss = Utilities.ladeBild("/SteinWeiﬂ.png");
+    private BufferedImage kasten = Utilities.ladeBild("/kasten2.png");
 
+    
     // zeichnen
     @Override
     protected void paintComponent(Graphics g) {
@@ -116,11 +119,9 @@ public class Spielfeld extends JPanel {
 	g.drawImage(Utilities.ladeBild("/spielfeld.png"), 115, 115, this);
 
 	// DEBUG
-	// Stein zeichnen
-	// g.drawImage(steinSchwarz, 150 - 32, 815 - 32, 64, 64, this);
-	// g.drawImage(steinWeiss, 150 - 32, 480 - 32, 64, 64, this);
-	// DEBUG
-	// Knotenpunkte zeichnen
+	g.drawImage(kasten, dieOberflaeche.PANE_WIDTH / 2 - 678 / 2- 4, 830, this);
+	
+	// Maushover zeichnen
 	for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {
 	    if (knotenpunkt != null) {
 		knotenpunkt.zeichnen(g);

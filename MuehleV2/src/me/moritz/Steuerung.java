@@ -61,7 +61,8 @@ public class Steuerung implements Runnable {
 	dieOberflaeche.getBtnStartreihenfolge1().setVisible(true);
 	dieOberflaeche.getBtnStartreihenfolge2().setVisible(true);
 	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(true);
-
+	dieOberflaeche.getMeldung().setVisible(false);
+	
 	// Standartwahl der Farbwahl: Spieler 1 schwarz, Spieler 2 weiﬂ
 	dieOberflaeche.getBtnFarbwahl1().setSelected(true);
 	// Standartwahl der Startreihenfolge: Spieler 1 beginnt
@@ -77,6 +78,7 @@ public class Steuerung implements Runnable {
 	dieOberflaeche.getBtnStartreihenfolge1().setVisible(false);
 	dieOberflaeche.getBtnStartreihenfolge2().setVisible(false);
 	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(false);
+	dieOberflaeche.getMeldung().setVisible(true);
 
 	menuzustand = Zustand.SPIELEN;
     }
@@ -88,6 +90,7 @@ public class Steuerung implements Runnable {
 	dieOberflaeche.getBtnStartreihenfolge1().setVisible(false);
 	dieOberflaeche.getBtnStartreihenfolge2().setVisible(false);
 	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(false);
+	dieOberflaeche.getMeldung().setVisible(false);
 
 	initSpiel();
 	menuzustand = Zustand.MENU;
@@ -129,6 +132,7 @@ public class Steuerung implements Runnable {
 	    }
 	} else {
 	    // TODO zeige Fehlermeldung
+	    dieOberflaeche.zeigeMeldung("An dieser Stelle liegt bereits ein Stein!");
 	}
     }
 

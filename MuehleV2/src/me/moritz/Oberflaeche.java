@@ -1,13 +1,13 @@
 package me.moritz;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
@@ -30,6 +30,7 @@ public class Oberflaeche extends JFrame {
     private JRadioButton btnStartreihenfolge1; // Spieler 1 beginnt
     private JRadioButton btnStartreihenfolge2; // Spieler 2 beginnt
     private JButton btnEinstellungenBestaetigen;
+    private JLabel meldung;
 
     // KONSTRUKTOR
     public Oberflaeche(Steuerung dieSteuerung) {
@@ -86,6 +87,10 @@ public class Oberflaeche extends JFrame {
 	    }
 	});
 
+	// Meldungen
+	meldung = new JLabel();
+	meldung.setFont(new Font("David", Font.PLAIN, 16));
+	
 	// Spielfeld
 	contentPane = new Spielfeld(this);
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -98,6 +103,7 @@ public class Oberflaeche extends JFrame {
 	contentPane.add(btnStartreihenfolge1);
 	contentPane.add(btnStartreihenfolge2);
 	contentPane.add(btnEinstellungenBestaetigen);
+	contentPane.add(meldung);
 
 	// Spielzustand anfangs auf Menü setzen
 	dieSteuerung.setSpielzustandMenu();
@@ -117,6 +123,14 @@ public class Oberflaeche extends JFrame {
 	SwingUtilities.updateComponentTreeUI(this);
     }
 
+    public void zeigeMeldung(String text) {
+	meldung.setText(text);
+	
+	final int stringWidth = meldung.getFontMetrics(meldung.getFont()).stringWidth(text);
+	meldung.setBounds(PANE_WIDTH / 2 - stringWidth / 2 , 900, stringWidth + 20, 20);
+	meldung.setVisible(true);
+    }
+    
     public Steuerung getDieSteuerung() {
 	return dieSteuerung;
     }
@@ -143,5 +157,9 @@ public class Oberflaeche extends JFrame {
 
     public JRadioButton getBtnStartreihenfolge2() {
 	return btnStartreihenfolge2;
+    }
+
+    public JLabel getMeldung() {
+        return meldung;
     }
 }

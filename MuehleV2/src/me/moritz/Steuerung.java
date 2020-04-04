@@ -14,6 +14,8 @@ public class Steuerung implements Runnable {
     private Oberflaeche dieOberflaeche;
     private Zustand menuzustand = Zustand.MENU;
     private Zustand spielzustand;
+    private Spieler spieler1;
+    private Spieler spieler2;
 
     // KONSTRUKTOR
     public Steuerung() {
@@ -59,7 +61,7 @@ public class Steuerung implements Runnable {
 	dieOberflaeche.getBtnStartreihenfolge1().setVisible(true);
 	dieOberflaeche.getBtnStartreihenfolge2().setVisible(true);
 	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(true);
-	
+
 	// Standartwahl der Farbwahl: Spieler 1 schwarz, Spieler 2 weiß
 	dieOberflaeche.getBtnFarbwahl1().setSelected(true);
 	// Standartwahl der Startreihenfolge: Spieler 1 beginnt
@@ -79,15 +81,55 @@ public class Steuerung implements Runnable {
 	menuzustand = Zustand.SPIELEN;
     }
 
-    // setzt den Menuzustand auf Menu und stellt die Components ein
+    // setzt den Menuzustand auf Menu, stellt die Components ein und startet das Setzen
     public void setSpielzustandMenu() {
 	dieOberflaeche.getBtnFarbwahl1().setVisible(false);
 	dieOberflaeche.getBtnFarbwahl2().setVisible(false);
 	dieOberflaeche.getBtnStartreihenfolge1().setVisible(false);
 	dieOberflaeche.getBtnStartreihenfolge2().setVisible(false);
 	dieOberflaeche.getBtnEinstellungenBestaetigen().setVisible(false);
-	
+
+	initSpiel();
 	menuzustand = Zustand.MENU;
+    }
+
+    // setzt den Spielzustand und erstellt die Spieler Objekte
+    private void initSpiel() {
+	spieler1 = new Spieler(dieOberflaeche.getBtnFarbwahl1().isSelected() ? Farbe.SCHWARZ : Farbe.WEISS);
+	spieler2 = new Spieler(dieOberflaeche.getBtnFarbwahl1().isSelected() ? Farbe.WEISS : Farbe.SCHWARZ);
+
+	spielzustand = dieOberflaeche.getBtnStartreihenfolge1().isSelected() ? Zustand.SETZENSPIELER1 : Zustand.SEZTENSPIELER2;
+    }
+
+    // Verhalten, wenn ein Knotenpunkt bzw. ein Stein angeklickt wurde, übergibt den jeweiligen Knotenpunkt
+    public void knotenpunktGeklickt(Knotenpunkt knotenpunkt) {
+	// Steine setzen
+	if (spielzustand == Zustand.SETZENSPIELER1) {
+	    setzeStein(spieler1, knotenpunkt);
+	} else if (spielzustand == Zustand.SEZTENSPIELER2) {
+	    setzeStein(spieler2, knotenpunkt);
+	}
+    }
+
+    // setzt einen Stein auf den Knotenpunkt und wechselt den Spielzustand
+    // gibt eine Fehlermeldung aus, wenn dort bereits ein Stein ist
+    private void setzeStein(Spieler spieler, Knotenpunkt knotenpunkt) {
+	if (knotenpunkt.getStein() == null) {
+	    knotenpunkt.setStein(new Stein(spieler.getFarbe()));
+	    spieler.reduziereVerbleibendeSteine();
+
+	    // Hat der andere Spieler noch Steine übrig?
+	    Spieler andererSpieler = (spielzustand == Zustand.SETZENSPIELER1) ? spieler2 : spieler1;
+	    if (andererSpieler.getVerbleibendeSteine() > 0) {
+		// wenn noch Steine übrig sind, in Setzen wechseln
+		spielzustand = (spielzustand == Zustand.SETZENSPIELER1) ? Zustand.SEZTENSPIELER2 : Zustand.SETZENSPIELER1;
+	    } else {
+		// wenn keine Steine übrig sind, in Bewegen wechseln
+		spielzustand = (spielzustand == Zustand.SETZENSPIELER1) ? Zustand.BEWEGENSPIELER2 : Zustand.BEWEGENSPIELER1;
+	    }
+	} else {
+	    // TODO zeige Fehlermeldung
+	}
     }
 
     public Zustand getMenuzustand() {
@@ -97,8 +139,16 @@ public class Steuerung implements Runnable {
     public Zustand getSpielzustand() {
 	return spielzustand;
     }
-    
+
     public Oberflaeche getDieOberflaeche() {
 	return dieOberflaeche;
+    }
+
+    public Spieler getSpieler1() {
+	return spieler1;
+    }
+
+    public Spieler getSpieler2() {
+	return spieler2;
     }
 }

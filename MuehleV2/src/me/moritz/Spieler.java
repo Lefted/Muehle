@@ -21,8 +21,8 @@ public class Spieler {
 	return verbleibendeSteine;
     }
 
-    public void setVerbleibendeSteine(int verbleibendeSteine) {
-	this.verbleibendeSteine = verbleibendeSteine;
+    public void reduziereVerbleibendeSteine() {
+	this.verbleibendeSteine--;
     }
 
     public boolean isSpringen() {

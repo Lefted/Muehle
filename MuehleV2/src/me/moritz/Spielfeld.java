@@ -26,22 +26,18 @@ public class Spielfeld extends JPanel {
 
 	addMouseListener(new MouseAdapter() {
 	    @Override
-	    public void mouseClicked(MouseEvent e) {
-		// DEBUG
-		// System.out.println("x:" + e.getX() + " y:" + e.getY());
-
-		// DEBUG
-		// Knotenpunkte zeichnen
+	    public void mousePressed(MouseEvent e) {
 		for (Knotenpunkt knotenpunkt : dieKnotenpunkte) {
 		    if (knotenpunkt != null) {
 			if (knotenpunkt.istMausÜber(e.getX(), e.getY())) {
-			    // System.out.println("Knotenpunkt geklickt");
+			    dieSteuerung.knotenpunktGeklickt(knotenpunkt);
 			}
 		    }
 		}
 	    }
 	});
 
+	// Macht den Knotenpunkt über dem sich die Maus befindet kenntlich
 	addMouseMotionListener(new MouseAdapter() {
 	    @Override
 	    public void mouseMoved(MouseEvent e) {

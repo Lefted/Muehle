@@ -41,7 +41,7 @@ public class Oberflaeche extends JFrame {
 	// DEBUG
 	System.out.println("Wurde die GUI auf dem EDT erstellt? " + SwingUtilities.isEventDispatchThread());
 
-	setTitle("Mühle V1");
+	setTitle("Mühle v2");
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setResizable(false);
 

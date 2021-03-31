@@ -8,7 +8,7 @@ import me.moritz.muehle.models.Stone;
 public class MoveState implements PlayerState {
 
     @Override
-    public void onClickedPoint(Point point) {
+    public void onPointClicked(Point point) {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 	final Point selectedPoint = activePlayer.getSelectedPoint();
 
@@ -24,7 +24,7 @@ public class MoveState implements PlayerState {
 		moveStone(selectedPoint, point);
 		activePlayer.setSelectedPoint(null);
 		Controller.INSTANCE.changePlayers();
-	    } else if (point.getStone().getColor() == activePlayer.getColor()) {
+	    } else if (point.getStone().getColor() == activePlayer.getColor() && point != selectedPoint) {
 		activePlayer.setSelectedPoint(point);
 	    } else {
 		activePlayer.setSelectedPoint(null);
@@ -32,7 +32,7 @@ public class MoveState implements PlayerState {
 	}
     }
 
-    private void moveStone(Point origin, Point destination) {
+    protected void moveStone(Point origin, Point destination) {
 	final Stone stone = origin.getStone();
 	destination.setStone(stone);
 	origin.setStone(null);

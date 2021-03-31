@@ -75,7 +75,7 @@ public class Point {
 
 	// draw selection
 	if (stone != null && Controller.INSTANCE.getActivePlayer().getSelectedPoint() == this)
-	    g.drawImage(selectionImg, x - 20, y - 20, null);
+	    g.drawImage(selectionImg, x - 8, y - 8, null);
 
     }
 

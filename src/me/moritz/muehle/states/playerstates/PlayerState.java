@@ -4,7 +4,7 @@ import me.moritz.muehle.models.Point;
 
 public interface PlayerState {
 
-    void onClickedPoint(Point point);
+    void onPointClicked(Point point);
     
     void onVoidClicked();
 }

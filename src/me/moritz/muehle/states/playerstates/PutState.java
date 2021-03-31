@@ -8,7 +8,7 @@ import me.moritz.muehle.models.Stone;
 public class PutState implements PlayerState {
 
     @Override
-    public void onClickedPoint(Point point) {
+    public void onPointClicked(Point point) {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 
 	point.placeStone(activePlayer.getColor());

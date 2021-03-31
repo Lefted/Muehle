@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
 
 		// delegate mouse click to active player's state
 		// this blocks the gui thread but it's ok because the click should be fully processed before other things happen
-		Controller.INSTANCE.getActivePlayer().getCurrentState().onClickedPoint(point);
+		Controller.INSTANCE.getActivePlayer().getCurrentState().onPointClicked(point);
 		clickedVoid = false;
 		break;
 	    }

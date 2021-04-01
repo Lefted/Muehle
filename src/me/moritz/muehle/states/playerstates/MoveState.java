@@ -19,17 +19,24 @@ public class MoveState implements PlayerState {
 		activePlayer.setSelectedPoint(point);
 	    }
 	} else {
-	    // TODO validate
+
 	    if (point.getStone() == null) {
-		moveStone(selectedPoint, point);
-		activePlayer.setSelectedPoint(null);
-		Controller.INSTANCE.changePlayers();
+		if (isValid(point, selectedPoint)) {
+		    moveStone(selectedPoint, point);
+		    activePlayer.setSelectedPoint(null);
+		    Controller.INSTANCE.changePlayers();
+		}
 	    } else if (point.getStone().getColor() == activePlayer.getColor() && point != selectedPoint) {
 		activePlayer.setSelectedPoint(point);
 	    } else {
 		activePlayer.setSelectedPoint(null);
 	    }
+
 	}
+    }
+
+    private  boolean isValid(Point origin, Point destination) {
+	return origin.isNeighbourTo(destination);
     }
 
     protected void moveStone(Point origin, Point destination) {
@@ -43,7 +50,7 @@ public class MoveState implements PlayerState {
     public void onVoidClicked() {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 	final Point selectedPoint = activePlayer.getSelectedPoint();
-	
+
 	if (selectedPoint != null)
 	    activePlayer.setSelectedPoint(null);
     }

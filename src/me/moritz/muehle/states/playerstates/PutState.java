@@ -11,14 +11,16 @@ public class PutState implements PlayerState {
     public void onPointClicked(Point point) {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 
-	point.placeStone(activePlayer.getColor());
-	activePlayer.increaseStonesPut();
+	if (point.getStone() == null) {
+	    point.placeStone(activePlayer.getColor());
+	    activePlayer.increaseStonesPut();
 
-	if (activePlayer.getStonesPut() > 9) {
-	    activePlayer.setCurrentState(PlayerStates.MOVE_STATE);
+	    if (activePlayer.getStonesPut() > 9) {
+		activePlayer.setCurrentState(PlayerStates.MOVE_STATE);
+	    }
+
+	    Controller.INSTANCE.changePlayers();
 	}
-
-	Controller.INSTANCE.changePlayers();
     }
 
     @Override

@@ -76,6 +76,27 @@ public class Point {
 	// draw selection
 	if (stone != null && Controller.INSTANCE.getActivePlayer().getSelectedPoint() == this)
 	    g.drawImage(selectionImg, x - 8, y - 8, null);
+    }
+
+    public boolean isNeighbourTo(Point point) {
+	final int deltaColumn = Math.abs(point.column - this.column);
+	final int deltaRow = Math.abs(point.row - this.row);
+	final int deltaCircle = Math.abs(point.circle - this.circle);
+
+	if (deltaCircle == 0) {
+	    if (deltaColumn == 1 && deltaRow == 0)
+		return true;
+	    if (deltaRow == 1 && deltaColumn == 0)
+		return true;
+	}
+
+	if (this.row == 1 && deltaCircle == 1 && deltaColumn == 0 && deltaRow == 0)
+	    return true;
+
+	if (this.column == 1 && deltaCircle == 1 && deltaColumn == 0 && deltaRow == 0)
+	    return true;
+
+	return false;
 
     }
 

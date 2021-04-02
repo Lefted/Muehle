@@ -12,6 +12,7 @@ public class MoveState implements PlayerState {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 	final Point selectedPoint = activePlayer.getSelectedPoint();
 
+	// select a point
 	if (selectedPoint == null) {
 	    final Stone stoneClicked = point.getStone();
 
@@ -21,30 +22,35 @@ public class MoveState implements PlayerState {
 	} else {
 
 	    if (point.getStone() == null) {
-		if (isValid(point, selectedPoint)) {
+		if (isValidMovement(point, selectedPoint)) {
 		    
+		    // move the stone
 		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
 		    if (createdMill) {
-			System.out.println("Made new mill!");
-			// TODO
-			// change to TakeState
+			
+			// take a stone
+			final PlayerState nextState = activePlayer.getCurrentState();
+			activePlayer.setCurrentState(new TakeState(nextState));
+		    } else {
+			Controller.INSTANCE.changePlayers();
 		    }
 		    
 		    // TODO check if enemy player cannot move
 		    
 		    activePlayer.setSelectedPoint(null);
-		    Controller.INSTANCE.changePlayers();
 		}
 	    } else if (point.getStone().getColor() == activePlayer.getColor() && point != selectedPoint) {
+		// select another point
 		activePlayer.setSelectedPoint(point);
 	    } else {
+		// deselect point
 		activePlayer.setSelectedPoint(null);
 	    }
 
 	}
     }
 
-    protected  boolean isValid(Point origin, Point destination) {
+    protected  boolean isValidMovement(Point origin, Point destination) {
 	return origin.isNeighbourTo(destination);
     }
 

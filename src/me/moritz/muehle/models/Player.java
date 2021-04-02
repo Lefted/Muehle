@@ -19,7 +19,7 @@ public class Player {
     public Player(Color color) {
 	this.color = color;
 
-	stonesLeft = 9;
+	stonesLeft = 0;
 	stonesPut = 0;
 	canJump = false;
     }
@@ -38,6 +38,10 @@ public class Player {
 
     public void decreaseStonesLeft() {
 	this.stonesLeft--;
+    }
+    
+    public void increaseStonesLeft() {
+	this.stonesLeft++;
     }
 
     public boolean isCanJump() {

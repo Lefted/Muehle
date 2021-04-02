@@ -3,6 +3,7 @@ package me.moritz.muehle.models;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ResourceBundle.Control;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.utils.ImageUtils;
@@ -64,6 +65,14 @@ public class Point {
     }
 
     public void draw(Graphics g) {
+	if (stone != null) {
+
+	    if (isInMill()) {
+		g.setColor(Color.red);
+		g.fillRect(x, y, WIDTH, HEIGHT);
+	    }
+	}
+
 	// draw stone
 	if (stone != null)
 	    stone.draw(g);
@@ -76,6 +85,7 @@ public class Point {
 	// draw selection
 	if (stone != null && Controller.INSTANCE.getActivePlayer().getSelectedPoint() == this)
 	    g.drawImage(selectionImg, x - 8, y - 8, null);
+
     }
 
     public boolean isNeighbourTo(Point point) {
@@ -98,6 +108,77 @@ public class Point {
 
 	return false;
 
+    }
+
+    public boolean isInMill() {
+	
+	if (stone == null)
+	    return false;
+	
+	// check column
+	if (column != 1) {
+	    boolean isMillColumn = true;
+
+	    for (int r = 0; r < 3; r++) {
+
+		if (Controller.INSTANCE.getPointAt(column, r, circle).getStone() == null)
+		    isMillColumn = false;
+		else if (Controller.INSTANCE.getPointAt(column, r, circle).getStone().getColor() != stone.getColor())
+		    isMillColumn = false;
+	    }
+
+	    if (isMillColumn)
+		return true;
+	}
+
+	if (column == 1) {
+	    boolean isMillColumn = true;
+
+	    for (int circ = 0; circ < 3; circ++) {
+
+		if (Controller.INSTANCE.getPointAt(column, row, circ).getStone() == null)
+		    isMillColumn = false;
+		else if (Controller.INSTANCE.getPointAt(column, row, circ).getStone().getColor() != stone.getColor())
+		    isMillColumn = false;
+	    }
+
+	    if (isMillColumn)
+		return true;
+	}
+
+	// check row
+	if (row != 1) {
+
+	    boolean isMillRow = true;
+
+	    for (int c = 0; c < 3; c++) {
+
+		if (Controller.INSTANCE.getPointAt(c, row, circle).getStone() == null)
+		    isMillRow = false;
+		else if (Controller.INSTANCE.getPointAt(c, row, circle).getStone().getColor() != stone.getColor())
+		    isMillRow = false;
+	    }
+
+	    if (isMillRow)
+		return true;
+	}
+
+	if (row == 1) {
+	    boolean isMillRow = true;
+
+	    for (int circ = 0; circ < 3; circ++) {
+
+		if (Controller.INSTANCE.getPointAt(column, row, circ).getStone() == null)
+		    isMillRow = false;
+		else if (Controller.INSTANCE.getPointAt(column, row, circ).getStone().getColor() != stone.getColor()) {
+		    isMillRow = false;
+		}
+	    }
+
+	    if (isMillRow)
+		return true;
+	}
+	return false;
     }
 
     public int getX() {

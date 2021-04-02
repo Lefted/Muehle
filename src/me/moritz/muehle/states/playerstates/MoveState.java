@@ -22,7 +22,16 @@ public class MoveState implements PlayerState {
 
 	    if (point.getStone() == null) {
 		if (isValid(point, selectedPoint)) {
-		    moveStone(selectedPoint, point);
+		    
+		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
+		    if (createdMill) {
+			System.out.println("Made new mill!");
+			// TODO
+			// change to TakeState
+		    }
+		    
+		    // TODO check if enemy player cannot move
+		    
 		    activePlayer.setSelectedPoint(null);
 		    Controller.INSTANCE.changePlayers();
 		}
@@ -35,15 +44,18 @@ public class MoveState implements PlayerState {
 	}
     }
 
-    private  boolean isValid(Point origin, Point destination) {
+    protected  boolean isValid(Point origin, Point destination) {
 	return origin.isNeighbourTo(destination);
     }
 
-    protected void moveStone(Point origin, Point destination) {
+    protected boolean moveStoneAndCheckForMill(Point origin, Point destination) {
 	final Stone stone = origin.getStone();
 	destination.setStone(stone);
 	origin.setStone(null);
 	stone.setPoint(destination);
+	
+	boolean createdMill = destination.isInMill();
+	return createdMill;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Controller {
 
     // SINGLETON INSTANCE
     public static final Controller INSTANCE = new Controller();
-    
+
     private Gui gui;
     private Player[] players;
     private int activePlayerIdx;
@@ -100,6 +100,15 @@ public class Controller {
 
     public Point[] getPoints() {
 	return points;
+    }
+
+    public Point getPointAt(int column, int row, int circle) {
+	for (Point point : points) {
+	    if (point.getColumn() == column && point.getRow() == row && point.getCircle() == circle)
+		return point;
+	}
+
+	return null;
     }
 
     public Player[] getPlayers() {

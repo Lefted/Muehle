@@ -23,20 +23,24 @@ public class MoveState implements PlayerState {
 
 	    if (point.getStone() == null) {
 		if (isValidMovement(point, selectedPoint)) {
-		    
+
 		    // move the stone
 		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
 		    if (createdMill) {
-			
+
 			// take a stone
 			final PlayerState nextState = activePlayer.getCurrentState();
 			activePlayer.setCurrentState(new TakeState(nextState));
 		    } else {
+			
+			if (isOpponentSuffocated()) {
+			    // check works
+			    System.out.println("Sufffocated!");
+			    // TODO
+			}
 			Controller.INSTANCE.changePlayers();
 		    }
-		    
-		    // TODO check if enemy player cannot move
-		    
+
 		    activePlayer.setSelectedPoint(null);
 		}
 	    } else if (point.getStone().getColor() == activePlayer.getColor() && point != selectedPoint) {
@@ -50,7 +54,31 @@ public class MoveState implements PlayerState {
 	}
     }
 
-    protected  boolean isValidMovement(Point origin, Point destination) {
+    private boolean isOpponentSuffocated() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Point[] points = Controller.INSTANCE.getPoints();
+
+	// check if there's any free point the opponent could go to
+	for (Point ownPoint : points) {
+
+	    // check if point is owned by opponent
+	    if (ownPoint.getStone() != null) {
+		if (ownPoint.getStone().getColor() == opponentPlayer.getColor()) {
+
+		    // check if there's a neighbour point which is free
+		    for (Point point : points) {
+
+			if (ownPoint.isNeighbourTo(point) && point.getStone() == null)
+			    return false;
+		    }
+		}
+	    }
+	}
+	return true;
+    }
+
+    protected boolean isValidMovement(Point origin, Point destination) {
 	return origin.isNeighbourTo(destination);
     }
 
@@ -59,7 +87,7 @@ public class MoveState implements PlayerState {
 	destination.setStone(stone);
 	origin.setStone(null);
 	stone.setPoint(destination);
-	
+
 	boolean createdMill = destination.isInMill();
 	return createdMill;
     }

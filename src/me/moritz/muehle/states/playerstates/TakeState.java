@@ -16,8 +16,13 @@ public class TakeState implements PlayerState {
     public void onPointClicked(Point point) {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 
-	// TODO
-	// check if player can take any stone
+	final boolean canTakeStone = checkCanTakeStone();
+	
+	if (!canTakeStone) {
+	    activePlayer.setCurrentState(nextState);
+	    Controller.INSTANCE.changePlayers();
+	    return;
+	}
 
 	if (isValid(point)) {
 	    takeStoneFromPoint(point);
@@ -31,6 +36,19 @@ public class TakeState implements PlayerState {
 		Controller.INSTANCE.changePlayers();
 	    }
 	}
+    }
+
+    private boolean checkCanTakeStone() {
+	final Point[] points = Controller.INSTANCE.getPoints();
+	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+
+	for (Point point : points) {
+
+	    if (point.getStone() != null && point.getStone().getColor() == opponentPlayer.getColor() && !point.isInMill())
+		return true;
+
+	}
+	return false;
     }
 
     private boolean isValid(Point point) {
@@ -60,12 +78,40 @@ public class TakeState implements PlayerState {
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 3)
 	    return true;
+	
+	if (isOpponentSuffocated())
+	    return true;
 
 	return false;
     }
 
+    private boolean isOpponentSuffocated() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Point[] points = Controller.INSTANCE.getPoints();
+
+	// check if there's any free point the opponent could go to
+	for (Point ownPoint : points) {
+
+	    // check if point is owned by opponent
+	    if (ownPoint.getStone() != null) {
+		if (ownPoint.getStone().getColor() == opponentPlayer.getColor()) {
+
+		    // check if there's a neighbour point which is free
+		    for (Point point : points) {
+
+			if (ownPoint.isNeighbourTo(point) && point.getStone() == null) 
+			    return false;
+		    }
+		}
+	    }
+	}
+	return true;
+    }
+    
     private void endGame() {
-    // TODO
+	// TODO
+	System.out.println("ende");
     }
 
     private void tryChangingOpponentToJumpingState() {

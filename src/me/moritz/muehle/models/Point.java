@@ -180,7 +180,7 @@ public class Point {
 	}
 	return false;
     }
-
+    
     public int getX() {
 	return x;
     }

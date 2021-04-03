@@ -1,5 +1,7 @@
 package me.moritz.muehle.states.playerstates;
 
+import javax.swing.JOptionPane;
+
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
@@ -17,7 +19,7 @@ public class TakeState implements PlayerState {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 
 	final boolean canTakeStone = checkCanTakeStone();
-	
+
 	if (!canTakeStone) {
 	    activePlayer.setCurrentState(nextState);
 	    Controller.INSTANCE.changePlayers();
@@ -58,11 +60,15 @@ public class TakeState implements PlayerState {
 	if (point.getStone() == null)
 	    return false;
 
-	if (point.getStone().getColor() != opponentPlayer.getColor())
+	if (point.getStone().getColor() != opponentPlayer.getColor()) {
+	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "You should take stones from your opponent!");
 	    return false;
+	}
 
-	if (point.isInMill())
+	if (point.isInMill()) {
+	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "You can't take a stone that is part of a mill!");
 	    return false;
+	}
 
 	return true;
     }
@@ -78,7 +84,7 @@ public class TakeState implements PlayerState {
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 3)
 	    return true;
-	
+
 	if (isOpponentSuffocated())
 	    return true;
 
@@ -100,7 +106,7 @@ public class TakeState implements PlayerState {
 		    // check if there's a neighbour point which is free
 		    for (Point point : points) {
 
-			if (ownPoint.isNeighbourTo(point) && point.getStone() == null) 
+			if (ownPoint.isNeighbourTo(point) && point.getStone() == null)
 			    return false;
 		    }
 		}
@@ -108,23 +114,21 @@ public class TakeState implements PlayerState {
 	}
 	return true;
     }
-    
+
     private void endGame() {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
+	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game!", activePlayer.getColor().toString()));
 	Controller.INSTANCE.setGameDone(true);
     }
 
     private void tryChangingOpponentToJumpingState() {
 	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
 
-	System.out.println(String.format("stones put %s stones left %s", opponentPlayer.getStonesPut(), opponentPlayer.getStonesLeft()));
-
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
+	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor().toString()));
 	    opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
-	    System.out.println("change to jump state");
 	} else {
-	    System.out.println("no change to jump state");
 	}
     }
 
@@ -136,7 +140,8 @@ public class TakeState implements PlayerState {
     public void refreshStatus() {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
 	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
-	Controller.INSTANCE.getGui().setStatus(String.format("%s must take a stone from %s", activePlayer.getColor().toString(), opponentPlayer.getColor().toString()));
+	Controller.INSTANCE.getGui().setStatus(String.format("%s must take a stone from %s", activePlayer.getColor().toString(), opponentPlayer.getColor()
+	    .toString()));
     }
 
 }

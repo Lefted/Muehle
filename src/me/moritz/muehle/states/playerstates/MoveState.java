@@ -1,5 +1,7 @@
 package me.moritz.muehle.states.playerstates;
 
+import javax.swing.JOptionPane;
+
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
@@ -34,9 +36,7 @@ public class MoveState implements PlayerState {
 		    } else {
 
 			if (isOpponentSuffocated()) {
-			    // check works
-			    System.out.println("Sufffocated!");
-			    // TODO
+			    endGame();
 			}
 			Controller.INSTANCE.changePlayers();
 		    }
@@ -90,6 +90,13 @@ public class MoveState implements PlayerState {
 
 	boolean createdMill = destination.isInMill();
 	return createdMill;
+    }
+
+    private void endGame() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
+	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game!", activePlayer.getColor().toString()));
+	Controller.INSTANCE.setGameDone(true);
     }
 
     @Override

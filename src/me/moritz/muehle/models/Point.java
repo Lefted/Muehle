@@ -65,14 +65,6 @@ public class Point {
     }
 
     public void draw(Graphics g) {
-	if (stone != null) {
-
-	    if (isInMill()) {
-		g.setColor(Color.red);
-		g.fillRect(x, y, WIDTH, HEIGHT);
-	    }
-	}
-
 	// draw stone
 	if (stone != null)
 	    stone.draw(g);

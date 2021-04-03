@@ -1,5 +1,7 @@
 package me.moritz.muehle.states.playerstates;
 
+import javax.swing.JOptionPane;
+
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
@@ -18,8 +20,20 @@ public class PutState implements PlayerState {
 	    }
 
 	    if (createdMill) {
-		final PlayerState nextState = activePlayer.getCurrentState();
-		activePlayer.setCurrentState(new TakeState(nextState));
+
+		final boolean canTakeStone = TakeState.checkCanTakeStone();
+		if (canTakeStone) {
+		    // take a stone
+		    final PlayerState nextState = activePlayer.getCurrentState();
+		    activePlayer.setCurrentState(new TakeState(nextState));
+		} else {
+		    // ensure that the last stone is rendered
+		    Controller.INSTANCE.getGui().repaintGamePanel();
+
+		    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s", activePlayer.getColor()
+			.toString(), Controller.INSTANCE.getOpponentPlayer().getColor().toString()));
+		    Controller.INSTANCE.changePlayers();
+		}
 	    } else {
 		Controller.INSTANCE.changePlayers();
 	    }

@@ -12,22 +12,6 @@ public class TakeState implements PlayerState {
 
     public TakeState(PlayerState nextState) {
 	this.nextState = nextState;
-
-	// ensure that the stone that was placed latest is rendered
-	Controller.INSTANCE.getGui().repaintGamePanel();
-	
-	// leave state implicitely if the player can't take a stone
-	final boolean canTakeStone = checkCanTakeStone();
-
-	if (!canTakeStone) {
-	    final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-	    final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
-	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s.", activePlayer.getColor().toString(),
-		opponentPlayer.getColor().toString()));
-	    activePlayer.setCurrentState(nextState);
-	    Controller.INSTANCE.changePlayers();
-	    return;
-	}
     }
 
     @Override
@@ -48,7 +32,7 @@ public class TakeState implements PlayerState {
 	}
     }
 
-    private boolean checkCanTakeStone() {
+    public static boolean checkCanTakeStone() {
 	final Point[] points = Controller.INSTANCE.getPoints();
 	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
 

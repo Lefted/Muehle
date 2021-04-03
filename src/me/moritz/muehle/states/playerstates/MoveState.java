@@ -29,10 +29,20 @@ public class MoveState implements PlayerState {
 		    // move the stone
 		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
 		    if (createdMill) {
+			final boolean canTakeStone = TakeState.checkCanTakeStone();
 
-			// take a stone
-			final PlayerState nextState = activePlayer.getCurrentState();
-			activePlayer.setCurrentState(new TakeState(nextState));
+			if (canTakeStone) {
+			    // take a stone
+			    final PlayerState nextState = activePlayer.getCurrentState();
+			    activePlayer.setCurrentState(new TakeState(nextState));
+			} else {
+			    // ensure that the last stone is rendered
+			    Controller.INSTANCE.getGui().repaintGamePanel();
+
+			    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s", activePlayer.getColor()
+				.toString(), Controller.INSTANCE.getOpponentPlayer().getColor().toString()));
+			    Controller.INSTANCE.changePlayers();
+			}
 		    } else {
 
 			if (isOpponentSuffocated()) {

@@ -58,6 +58,7 @@ public class Player {
 
     public void setCurrentState(PlayerState currentState) {
 	this.currentState = currentState;
+	currentState.refreshStatus();
     }
 
     public Color getColor() {

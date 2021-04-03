@@ -32,7 +32,7 @@ public class MoveState implements PlayerState {
 			final PlayerState nextState = activePlayer.getCurrentState();
 			activePlayer.setCurrentState(new TakeState(nextState));
 		    } else {
-			
+
 			if (isOpponentSuffocated()) {
 			    // check works
 			    System.out.println("Sufffocated!");
@@ -99,5 +99,11 @@ public class MoveState implements PlayerState {
 
 	if (selectedPoint != null)
 	    activePlayer.setSelectedPoint(null);
+    }
+
+    @Override
+    public void refreshStatus() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	Controller.INSTANCE.getGui().setStatus(String.format("%s must move a stone", activePlayer.getColor().toString()));
     }
 }

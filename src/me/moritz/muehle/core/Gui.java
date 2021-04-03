@@ -39,4 +39,8 @@ public class Gui extends JFrame {
 	}
 	SwingUtilities.updateComponentTreeUI(this);
     }
+    
+    public void setStatus(String status) {
+	setTitle(String.format("Mühle - %s", status));
+    }
 }

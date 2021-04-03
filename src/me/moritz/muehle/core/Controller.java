@@ -18,12 +18,16 @@ public class Controller {
     private int activePlayerIdx;
 
     private Point[] points;
+    
+    private boolean gameDone;
 
     public static void main(String[] args) {
+	
 	// create the GUI (ensuring it lives on the Event-Dispatch-Thread)
 	EventQueue.invokeLater(() -> {
 	    final Gui gui = new Gui();
 	    INSTANCE.setGui(gui);
+	    INSTANCE.initializeNewGame();
 	});
     }
 
@@ -35,7 +39,7 @@ public class Controller {
 	players[0] = new Player(Color.WHITE);
 	players[1] = new Player(Color.BLACK);
 
-	initializeNewGame();
+//	initializeNewGame();
     }
 
     private void createPoints() {
@@ -74,8 +78,8 @@ public class Controller {
     }
 
     public void initializeNewGame() {
+	gameDone = false;
 	removeStonesFromField();
-
 	// put both players into PUT_STATE
 	IntStream.range(0, 2).forEach((i) -> players[i].setCurrentState(PlayerStates.PUT_STATE));
     }
@@ -88,6 +92,7 @@ public class Controller {
 
     public void changePlayers() {
 	activePlayerIdx = activePlayerIdx == 0 ? 1 : 0;
+	getActivePlayer().getCurrentState().refreshStatus();
     }
 
     public Gui getGui() {
@@ -126,5 +131,13 @@ public class Controller {
     public Player getOpponentPlayer() {
 	final int opponentIdx = activePlayerIdx == 0 ? 1 : 0;
 	return players[opponentIdx];
+    }
+
+    public boolean isGameDone() {
+        return gameDone;
+    }
+
+    public void setGameDone(boolean gameDone) {
+        this.gameDone = gameDone;
     }
 }

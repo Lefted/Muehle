@@ -7,4 +7,6 @@ public interface PlayerState {
     void onPointClicked(Point point);
     
     void onVoidClicked();
+    
+    void refreshStatus();
 }

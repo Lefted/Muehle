@@ -43,4 +43,11 @@ public class PutState implements PlayerState {
     public void onVoidClicked() {
     }
 
+    @Override
+    public void refreshStatus() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final int stonesLeftToPut = 9 - activePlayer.getStonesPut();
+	Controller.INSTANCE.getGui().setStatus(String.format("%s must place a stone (%s stones left)", activePlayer.getColor().toString(), stonesLeftToPut));
+    }
+
 }

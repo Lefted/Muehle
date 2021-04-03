@@ -110,8 +110,9 @@ public class TakeState implements PlayerState {
     }
     
     private void endGame() {
-	// TODO
-	System.out.println("ende");
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
+	Controller.INSTANCE.setGameDone(true);
     }
 
     private void tryChangingOpponentToJumpingState() {
@@ -129,6 +130,13 @@ public class TakeState implements PlayerState {
 
     @Override
     public void onVoidClicked() {
+    }
+
+    @Override
+    public void refreshStatus() {
+	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	Controller.INSTANCE.getGui().setStatus(String.format("%s must take a stone from %s", activePlayer.getColor().toString(), opponentPlayer.getColor().toString()));
     }
 
 }

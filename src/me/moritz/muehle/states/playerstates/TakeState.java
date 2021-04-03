@@ -12,19 +12,27 @@ public class TakeState implements PlayerState {
 
     public TakeState(PlayerState nextState) {
 	this.nextState = nextState;
+
+	// ensure that the stone that was placed latest is rendered
+	Controller.INSTANCE.getGui().repaintGamePanel();
+	
+	// leave state implicitely if the player can't take a stone
+	final boolean canTakeStone = checkCanTakeStone();
+
+	if (!canTakeStone) {
+	    final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	    final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s.", activePlayer.getColor().toString(),
+		opponentPlayer.getColor().toString()));
+	    activePlayer.setCurrentState(nextState);
+	    Controller.INSTANCE.changePlayers();
+	    return;
+	}
     }
 
     @Override
     public void onPointClicked(Point point) {
 	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-
-	final boolean canTakeStone = checkCanTakeStone();
-
-	if (!canTakeStone) {
-	    activePlayer.setCurrentState(nextState);
-	    Controller.INSTANCE.changePlayers();
-	    return;
-	}
 
 	if (isValid(point)) {
 	    takeStoneFromPoint(point);
@@ -126,7 +134,8 @@ public class TakeState implements PlayerState {
 	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
-	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor().toString()));
+	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor()
+		.toString()));
 	    opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
 	} else {
 	}

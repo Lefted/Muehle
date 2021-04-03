@@ -43,4 +43,8 @@ public class Gui extends JFrame {
     public void setStatus(String status) {
 	setTitle(String.format("Mühle - %s", status));
     }
+    
+    public void repaintGamePanel() {
+	gamePanel.repaint();
+    }
 }

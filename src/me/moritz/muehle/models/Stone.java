@@ -7,8 +7,8 @@ import me.moritz.muehle.utils.ImageUtils;
 
 public class Stone {
 
-    private static final BufferedImage imgBlackStone = ImageUtils.INSTANCE.loadImage("res/stone_black.png");
-    private static final BufferedImage imgWhiteStone = ImageUtils.INSTANCE.loadImage("res/stone_white.png");
+    private static final BufferedImage imgBlackStone = ImageUtils.INSTANCE.loadImage("stone_black.png");
+    private static final BufferedImage imgWhiteStone = ImageUtils.INSTANCE.loadImage("stone_white.png");
 
     private final Color color;
     private Point point;

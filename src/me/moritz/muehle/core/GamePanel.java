@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
     private final Point[] points;
 
     public GamePanel() {
-	background = ImageUtils.INSTANCE.loadImage("res/background.png");
+	background = ImageUtils.INSTANCE.loadImage("background.png");
 	backgroundColor = new Color(0xFFFFCC);
 
 	this.points = Controller.INSTANCE.getPoints();

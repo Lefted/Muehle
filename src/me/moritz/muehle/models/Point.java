@@ -45,7 +45,7 @@ public class Point {
 	highlightColor = new Color(255, 255, 204, 123);
 	nonHighlightColor = new Color(255, 255, 255, 0);
 
-	selectionImg = ImageUtils.INSTANCE.loadImage("res/selection.png");
+	selectionImg = ImageUtils.INSTANCE.loadImage("selection.png");
     }
 
     public void placeStone(me.moritz.muehle.models.Color color) {

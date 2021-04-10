@@ -72,7 +72,7 @@ public class MultiplayerController {
 	    System.out.println(String.format("%s:%s", ip, port));
 	    
 	    networkHandler = isServer ? new ServerNetworkHandler(ip, port) : new ClientNetworkHandler(ip, port);
-	    networkHandler.runThread();
+	    networkHandler.startThread();
 	}
 
 	

@@ -1,10 +1,8 @@
 package me.moritz.muehle.multiplayer.network;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,39 +16,44 @@ public class ServerNetworkHandler extends NetworkHandler {
 
     private ServerSocket serverSocket;
     private Socket client;
-//    private BufferedReader inputReader;
-    private DataInputStream inputStream;
-    private DataOutputStream outputStream;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
 
     public ServerNetworkHandler(String ip, int port) {
 	this.ip = ip;
 	this.port = port;
     }
 
+//    @Override
+//    public void sendPacket(Packet packet) {
+//	// DEBUG
+//	final String packetData = String.format("%s: %s", packet.getTypeId(), packet.getPayload());
+//	System.out.println(String.format("sending packet %s", packetData));
+//	
+//	try {
+//	    outputStream.writeObject(packet);
+//	} catch (IOException e) {
+//	    System.err.println(String.format("Error sending packet %s:%s", packet.getTypeId(), packet.getPayload()));
+//	    e.printStackTrace();
+//	}
+//    }
+
+//    private void onPacketRecieved(Packet packet) {
+//	System.out.println(String.format("recived packet: %s:%s", packet.getTypeId(), packet.getPayload()));
+//	System.out.println(Packet.getPacketClassbyTypeId(packet.getTypeId()).getName());
+//    }
+//
+//    private void listenForPacket() {
+//	try {
+//	    final Packet incomingPacket = (Packet) inputStream.readObject();
+//	    onPacketRecieved(incomingPacket);
+//	} catch (ClassNotFoundException | IOException e) {
+//	    e.printStackTrace();
+//	}
+//    }
+
     @Override
-    public void sendPacket(Packet packet) {
-	final String packetData = String.format("%s: %s", packet.getPacketId(), packet.getPayload());
-	System.out.println(String.format("sending packet %s", packetData));
-	try {
-	    outputStream.writeUTF(packetData);
-	} catch (IOException e) {
-	    System.err.println(String.format("Error sending packet %s:%s", packet.getPacketId(), packet.getPayload()));
-	    e.printStackTrace();
-	}
-    }
-
-    private void listenForPacket() {
-	try {
-//	    final String packetData = inputReader.readLine();
-	    final String packetData = inputStream.readUTF();
-	    // TODO parse data into packet
-	    System.out.println(String.format("recieved %s", packetData));
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-    }
-
-    private void makeConnection() {
+    public void makeConnection() {
 	try {
 	    // wait for client
 	    serverSocket = new ServerSocket(port);
@@ -59,11 +62,8 @@ public class ServerNetworkHandler extends NetworkHandler {
 	    client = serverSocket.accept();
 
 	    // setup io
-//	    inputReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-	    inputStream = new DataInputStream(client.getInputStream());
-	    outputStream = new DataOutputStream(client.getOutputStream());
-	    
-	    connected = true;
+	    super.outputStream = new ObjectOutputStream(client.getOutputStream());
+	    super.inputStream = new ObjectInputStream(client.getInputStream());
 	} catch (IOException e) {
 	    System.err.println("Unable to create server socket. Exiting (1)");
 	    e.printStackTrace();
@@ -71,29 +71,15 @@ public class ServerNetworkHandler extends NetworkHandler {
 	}
     }
 
-    @Override
-    public void runThread() {
-	thread = new Thread(() -> {
-
-	    makeConnection();
-
-	    sendPacket(new TestPacket());
-	    // keep thread alive
-	    while (true) {
-
-		// listen for packets
-		while (connected) {
-
-		    listenForPacket();
-		}
-	    }
-
-	}, "Server Network Thread");
-	thread.start();
-    }
 
     @Override
     public void closeConnection() {
+	// TODO
+    }
+
+    @Override
+    public String getThreadName() {
+	return "Server Network Thread";
     }
 
 }

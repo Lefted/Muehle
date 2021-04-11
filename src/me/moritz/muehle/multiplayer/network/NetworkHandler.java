@@ -19,11 +19,11 @@ public abstract class NetworkHandler implements INetworkHandler {
 	thread = new Thread(() -> {
 
 	    makeConnection();
-	    
+
 	    connected = true;
 	    System.out.println("connected");
-	    
-	    sendPacket(new TestPacket());
+
+	    sendPacket(new TestPacket("This is a test message"));
 	    while (connected) {
 		recievePacket();
 	    }
@@ -35,23 +35,20 @@ public abstract class NetworkHandler implements INetworkHandler {
 
     public void sendPacket(Packet packet) {
 	// DEBUG
-	final String packetData = String.format("%s: %s", packet.getTypeId(), packet.getPayload());
-	System.out.println(String.format("sending packet %s", packetData));
+	System.out.println(String.format("type %s", packet.getTypeId()));
+
 	try {
 	    outputStream.writeObject(packet);
 	} catch (IOException e) {
-	    System.err.println(String.format("Error sending packet %s:%s", packet.getTypeId(), packet.getPayload()));
 	    e.printStackTrace();
+	    System.err.println(String.format("Error sending packet %s", packet.getTypeId()));
 	}
     }
 
     public void recievePacket() {
 	try {
-	    // parse data into packet
 	    Packet packet = (Packet) inputStream.readObject();
-
-	    System.out.println(String.format("recived packet: %s:%s", packet.getTypeId(), packet.getPayload()));
-	    System.out.println(Packet.getPacketClassbyTypeId(packet.getTypeId()).getName());
+	    System.out.println(String.format("packet type %s", packet.getTypeId()));
 	} catch (IOException | ClassNotFoundException e) {
 	    e.printStackTrace();
 	}

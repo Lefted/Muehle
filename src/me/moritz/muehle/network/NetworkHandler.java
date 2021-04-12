@@ -1,11 +1,11 @@
-package me.moritz.muehle.multiplayer.network;
+package me.moritz.muehle.network;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import me.moritz.muehle.multiplayer.network.packets.Packet;
-import me.moritz.muehle.multiplayer.network.packets.TestPacket;
+import me.moritz.muehle.network.packets.Packet;
+import me.moritz.muehle.network.packets.TestPacket;
 
 public abstract class NetworkHandler implements INetworkHandler {
 

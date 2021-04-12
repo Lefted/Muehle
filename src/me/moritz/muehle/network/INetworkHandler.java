@@ -1,6 +1,6 @@
-package me.moritz.muehle.multiplayer.network;
+package me.moritz.muehle.network;
 
-import me.moritz.muehle.multiplayer.network.packets.Packet;
+import me.moritz.muehle.network.packets.Packet;
 
 public interface INetworkHandler {
 

@@ -1,4 +1,4 @@
-package me.moritz.muehle.multiplayer.network.packets;
+package me.moritz.muehle.network.packets;
 
 import java.io.Serializable;
 import java.util.HashMap;

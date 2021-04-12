@@ -1,4 +1,4 @@
-package me.moritz.muehle.multiplayer.network;
+package me.moritz.muehle.network;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -9,8 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import me.moritz.muehle.multiplayer.network.packets.Packet;
-import me.moritz.muehle.multiplayer.network.packets.TestPacket;
+import me.moritz.muehle.network.packets.Packet;
+import me.moritz.muehle.network.packets.TestPacket;
 
 public class ClientNetworkHandler extends NetworkHandler {
 

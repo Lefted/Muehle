@@ -19,6 +19,8 @@ public class Controller {
     // SINGLETON INSTANCE
     public static final Controller INSTANCE = new Controller();
 
+    private Gui gui;
+
     private GameArguments gameArguments;
     private GameHandler gameHandler;
 
@@ -33,9 +35,7 @@ public class Controller {
 	// create the GUI (ensuring it lives on the Event-Dispatch-Thread)
 	EventQueue.invokeLater(() -> {
 	    final Gui gui = new Gui();
-	    INSTANCE.getGameHandler().setGui(gui);
-	    // REMOVE
-	    // INSTANCE.setGui(gui);
+	    INSTANCE.setGui(gui);
 	    INSTANCE.getGameHandler().initNewGame();
 	});
     }
@@ -59,5 +59,17 @@ public class Controller {
 
     public GameHandler getGameHandler() {
 	return gameHandler;
+    }
+
+    public Gui getGui() {
+	return gui;
+    }
+
+    public void setGui(Gui gui) {
+	this.gui = gui;
+    }
+
+    public static Controller getInstance() {
+	return INSTANCE;
     }
 }

@@ -6,10 +6,9 @@ import me.moritz.muehle.models.Point;
 
 public abstract class GameHandler implements IGameHandler {
 
-    protected Gui gui;
     protected Player[] players;
     protected Point[] points;
-    
+
     protected int activePlayerIdx;
     protected boolean gameDone;
 
@@ -82,14 +81,6 @@ public abstract class GameHandler implements IGameHandler {
 
     public void setGameDone(boolean gameDone) {
 	this.gameDone = gameDone;
-    }
-
-    public Gui getGui() {
-	return gui;
-    }
-
-    public void setGui(Gui gui) {
-	this.gui = gui;
     }
 
     public Point[] getPoints() {

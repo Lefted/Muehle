@@ -39,11 +39,18 @@ public class Gui extends JFrame {
 	}
 	SwingUtilities.updateComponentTreeUI(this);
     }
-    
+
     public void setStatus(String status) {
-	setTitle(String.format("Mühle - %s", status));
+	String prefix = null;
+
+	if (Controller.getInstance().getGameArguments().isMultiplayer())
+	    prefix = Controller.getInstance().getGameArguments().isServer() ? "Mühle - Server" : "Mühle - Client";
+	else
+	    prefix = "Mühle -";
+
+	setTitle(String.format("%s %s", prefix, status));
     }
-    
+
     public void repaintGamePanel() {
 	gamePanel.repaint();
     }

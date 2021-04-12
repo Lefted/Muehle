@@ -10,7 +10,7 @@ public class PutState implements PlayerState {
 
     @Override
     public void onPointClicked(Point point) {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 
 	if (point.getStone() == null) {
 	    final boolean createdMill = putStoneAndCheckForMill(point);
@@ -31,17 +31,17 @@ public class PutState implements PlayerState {
 		    Controller.INSTANCE.getGui().repaintGamePanel();
 
 		    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s", activePlayer.getColor()
-			.toString(), Controller.INSTANCE.getOpponentPlayer().getColor().toString()));
-		    Controller.INSTANCE.changePlayers();
+			.toString(), Controller.INSTANCE.getGameHandler().getOpponentPlayer().getColor().toString()));
+		    Controller.INSTANCE.getGameHandler().changePlayers();
 		}
 	    } else {
-		Controller.INSTANCE.changePlayers();
+		Controller.INSTANCE.getGameHandler().changePlayers();
 	    }
 	}
     }
 
     private boolean putStoneAndCheckForMill(Point point) {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 
 	point.placeStone(activePlayer.getColor());
 	activePlayer.increaseStonesPut();
@@ -59,7 +59,7 @@ public class PutState implements PlayerState {
 
     @Override
     public void refreshStatus() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	final int stonesLeftToPut = 9 - activePlayer.getStonesPut();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s must place a stone (%s stones left)", activePlayer.getColor().toString(), stonesLeftToPut));
     }

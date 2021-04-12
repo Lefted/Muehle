@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
 	background = ImageUtils.INSTANCE.loadImage("background.png");
 	backgroundColor = new Color(0xFFFFCC);
 
-	this.points = Controller.INSTANCE.getPoints();
+	this.points = Controller.INSTANCE.getGameHandler().getPoints();
 
 	addMouseMotionListener(this);
 	addMouseListener(this);
@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
 
     @Override
     public void mousePressed(MouseEvent var1) {
-	if (Controller.INSTANCE.isGameDone())
+	if (Controller.INSTANCE.getGameHandler().isGameDone())
 	    return;
 	
 	boolean clickedVoid = true;
@@ -90,14 +90,14 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
 
 		// delegate mouse click to active player's state
 		// this blocks the gui thread but it's ok because the click should be fully processed before other things happen
-		Controller.INSTANCE.getActivePlayer().getCurrentState().onPointClicked(point);
+		Controller.INSTANCE.getGameHandler().getActivePlayer().getCurrentState().onPointClicked(point);
 		clickedVoid = false;
 		break;
 	    }
 	}
 
 	if (clickedVoid)
-	    Controller.INSTANCE.getActivePlayer().getCurrentState().onVoidClicked();
+	    Controller.INSTANCE.getGameHandler().getActivePlayer().getCurrentState().onVoidClicked();
 
 	repaint();
     }

@@ -75,7 +75,7 @@ public class Point {
 	g.fillRect(x, y, WIDTH, HEIGHT);
 
 	// draw selection
-	if (stone != null && Controller.INSTANCE.getActivePlayer().getSelectedPoint() == this)
+	if (stone != null && Controller.INSTANCE.getGameHandler().getActivePlayer().getSelectedPoint() == this)
 	    g.drawImage(selectionImg, x - 8, y - 8, null);
 
     }
@@ -113,9 +113,9 @@ public class Point {
 
 	    for (int r = 0; r < 3; r++) {
 
-		if (Controller.INSTANCE.getPointAt(column, r, circle).getStone() == null)
+		if (Controller.INSTANCE.getGameHandler().getPointAt(column, r, circle).getStone() == null)
 		    isMillColumn = false;
-		else if (Controller.INSTANCE.getPointAt(column, r, circle).getStone().getColor() != stone.getColor())
+		else if (Controller.INSTANCE.getGameHandler().getPointAt(column, r, circle).getStone().getColor() != stone.getColor())
 		    isMillColumn = false;
 	    }
 
@@ -128,9 +128,9 @@ public class Point {
 
 	    for (int circ = 0; circ < 3; circ++) {
 
-		if (Controller.INSTANCE.getPointAt(column, row, circ).getStone() == null)
+		if (Controller.INSTANCE.getGameHandler().getPointAt(column, row, circ).getStone() == null)
 		    isMillColumn = false;
-		else if (Controller.INSTANCE.getPointAt(column, row, circ).getStone().getColor() != stone.getColor())
+		else if (Controller.INSTANCE.getGameHandler().getPointAt(column, row, circ).getStone().getColor() != stone.getColor())
 		    isMillColumn = false;
 	    }
 
@@ -145,9 +145,9 @@ public class Point {
 
 	    for (int c = 0; c < 3; c++) {
 
-		if (Controller.INSTANCE.getPointAt(c, row, circle).getStone() == null)
+		if (Controller.INSTANCE.getGameHandler().getPointAt(c, row, circle).getStone() == null)
 		    isMillRow = false;
-		else if (Controller.INSTANCE.getPointAt(c, row, circle).getStone().getColor() != stone.getColor())
+		else if (Controller.INSTANCE.getGameHandler().getPointAt(c, row, circle).getStone().getColor() != stone.getColor())
 		    isMillRow = false;
 	    }
 
@@ -160,9 +160,9 @@ public class Point {
 
 	    for (int circ = 0; circ < 3; circ++) {
 
-		if (Controller.INSTANCE.getPointAt(column, row, circ).getStone() == null)
+		if (Controller.INSTANCE.getGameHandler().getPointAt(column, row, circ).getStone() == null)
 		    isMillRow = false;
-		else if (Controller.INSTANCE.getPointAt(column, row, circ).getStone().getColor() != stone.getColor()) {
+		else if (Controller.INSTANCE.getGameHandler().getPointAt(column, row, circ).getStone().getColor() != stone.getColor()) {
 		    isMillRow = false;
 		}
 	    }

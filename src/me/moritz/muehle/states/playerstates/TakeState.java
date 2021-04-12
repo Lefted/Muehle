@@ -16,7 +16,7 @@ public class TakeState implements PlayerState {
 
     @Override
     public void onPointClicked(Point point) {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 
 	if (isValid(point)) {
 	    takeStoneFromPoint(point);
@@ -27,14 +27,14 @@ public class TakeState implements PlayerState {
 	    } else {
 		tryChangingOpponentToJumpingState();
 		activePlayer.setCurrentState(nextState);
-		Controller.INSTANCE.changePlayers();
+		Controller.INSTANCE.getGameHandler().changePlayers();
 	    }
 	}
     }
 
     public static boolean checkCanTakeStone() {
-	final Point[] points = Controller.INSTANCE.getPoints();
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Point[] points = Controller.INSTANCE.getGameHandler().getPoints();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 
 	for (Point point : points) {
 
@@ -46,8 +46,8 @@ public class TakeState implements PlayerState {
     }
 
     private boolean isValid(Point point) {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 
 	if (point.getStone() == null)
 	    return false;
@@ -66,13 +66,13 @@ public class TakeState implements PlayerState {
     }
 
     private void takeStoneFromPoint(Point point) {
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 	point.setStone(null);
 	opponentPlayer.decreaseStonesLeft();
     }
 
     private boolean testForLose() {
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 3)
 	    return true;
@@ -84,9 +84,9 @@ public class TakeState implements PlayerState {
     }
 
     private boolean isOpponentSuffocated() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
-	final Point[] points = Controller.INSTANCE.getPoints();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
+	final Point[] points = Controller.INSTANCE.getGameHandler().getPoints();
 
 	// check if there's any free point the opponent could go to
 	for (Point ownPoint : points) {
@@ -108,14 +108,14 @@ public class TakeState implements PlayerState {
     }
 
     private void endGame() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
 	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game!", activePlayer.getColor().toString()));
-	Controller.INSTANCE.setGameDone(true);
+	Controller.INSTANCE.getGameHandler().setGameDone(true);
     }
 
     private void tryChangingOpponentToJumpingState() {
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
 	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor()
@@ -131,8 +131,8 @@ public class TakeState implements PlayerState {
 
     @Override
     public void refreshStatus() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s must take a stone from %s", activePlayer.getColor().toString(), opponentPlayer.getColor()
 	    .toString()));
     }

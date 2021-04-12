@@ -11,7 +11,7 @@ public class MoveState implements PlayerState {
 
     @Override
     public void onPointClicked(Point point) {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	final Point selectedPoint = activePlayer.getSelectedPoint();
 
 	// select a point
@@ -40,15 +40,15 @@ public class MoveState implements PlayerState {
 			    Controller.INSTANCE.getGui().repaintGamePanel();
 
 			    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s cannot take a stone from %s", activePlayer.getColor()
-				.toString(), Controller.INSTANCE.getOpponentPlayer().getColor().toString()));
-			    Controller.INSTANCE.changePlayers();
+				.toString(), Controller.INSTANCE.getGameHandler().getOpponentPlayer().getColor().toString()));
+			    Controller.INSTANCE.getGameHandler().changePlayers();
 			}
 		    } else {
 
 			if (isOpponentSuffocated()) {
 			    endGame();
 			}
-			Controller.INSTANCE.changePlayers();
+			Controller.INSTANCE.getGameHandler().changePlayers();
 		    }
 
 		    activePlayer.setSelectedPoint(null);
@@ -65,9 +65,9 @@ public class MoveState implements PlayerState {
     }
 
     private boolean isOpponentSuffocated() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
-	final Player opponentPlayer = Controller.INSTANCE.getOpponentPlayer();
-	final Point[] points = Controller.INSTANCE.getPoints();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
+	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
+	final Point[] points = Controller.INSTANCE.getGameHandler().getPoints();
 
 	// check if there's any free point the opponent could go to
 	for (Point ownPoint : points) {
@@ -103,15 +103,15 @@ public class MoveState implements PlayerState {
     }
 
     private void endGame() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
 	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game!", activePlayer.getColor().toString()));
-	Controller.INSTANCE.setGameDone(true);
+	Controller.INSTANCE.getGameHandler().setGameDone(true);
     }
 
     @Override
     public void onVoidClicked() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	final Point selectedPoint = activePlayer.getSelectedPoint();
 
 	if (selectedPoint != null)
@@ -120,7 +120,7 @@ public class MoveState implements PlayerState {
 
     @Override
     public void refreshStatus() {
-	final Player activePlayer = Controller.INSTANCE.getActivePlayer();
+	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s must move a stone", activePlayer.getColor().toString()));
     }
 }

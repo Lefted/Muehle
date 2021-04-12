@@ -2,13 +2,15 @@ package me.moritz.muehle.arguments;
 
 public class GameArguments {
 
-    private final boolean multiplayer = false;
-    private final String ip = "127.0.0.1";
-    private final int port = 1223;
-    private final boolean server = false;
+    private boolean multiplayer = false;
 
-    private final boolean hasFirstMove = true;
-    private final boolean useWhite = true;
+    private boolean server = false;
+
+    private String ip = "127.0.0.1";
+    private int port = 1223;
+
+    private boolean hasFirstMove = true;
+    private boolean useWhite = true;
 
     public boolean isMultiplayer() {
 	return multiplayer;

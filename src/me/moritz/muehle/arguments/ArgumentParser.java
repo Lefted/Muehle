@@ -110,8 +110,10 @@ public class ArgumentParser {
 	try {
 	    T pojo = pojoClass.newInstance();
 
-	    Field[] fields = pojoClass.getFields();
+	    Field[] fields = pojoClass.getDeclaredFields();
 	    for (Field field : fields) {
+		field.setAccessible(true);
+
 		Class fieldType = field.getType();
 		String fieldName = "-" + field.getName().replace('_', '-');
 

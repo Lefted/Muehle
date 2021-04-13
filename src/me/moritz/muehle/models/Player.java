@@ -2,6 +2,7 @@ package me.moritz.muehle.models;
 
 import java.util.stream.IntStream;
 
+import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.states.playerstates.PlayerState;
 
 public class Player {
@@ -39,7 +40,7 @@ public class Player {
     public void decreaseStonesLeft() {
 	this.stonesLeft--;
     }
-    
+
     public void increaseStonesLeft() {
 	this.stonesLeft++;
     }
@@ -58,7 +59,9 @@ public class Player {
 
     public void setCurrentState(PlayerState currentState) {
 	this.currentState = currentState;
-	currentState.refreshStatus();
+
+	if (Controller.INSTANCE.getGameHandler().getActivePlayer() == this)
+	    currentState.refreshStatus();
     }
 
     public Color getColor() {

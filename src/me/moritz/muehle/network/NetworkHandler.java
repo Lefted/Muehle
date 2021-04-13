@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.network.packets.Packet;
 import me.moritz.muehle.network.packets.TestPacket;
+import me.moritz.muehle.states.playerstates.PlayerState;
+import me.moritz.muehle.states.playerstates.WaitState;
 
 public abstract class NetworkHandler implements INetworkHandler {
 
@@ -49,6 +52,12 @@ public abstract class NetworkHandler implements INetworkHandler {
 	try {
 	    Packet packet = (Packet) inputStream.readObject();
 	    System.out.println(String.format("packet type %s", packet.getTypeId()));
+	    
+	    // pass packet to waiting state
+	    final PlayerState currState = Controller.INSTANCE.getGameHandler().getActivePlayer().getCurrentState();
+	    if (currState instanceof WaitState)
+		((WaitState)currState).onPacketRecieved(packet);
+	    
 	} catch (IOException | ClassNotFoundException e) {
 	    e.printStackTrace();
 	}

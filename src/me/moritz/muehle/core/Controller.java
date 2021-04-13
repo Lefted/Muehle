@@ -68,8 +68,4 @@ public class Controller {
     public void setGui(Gui gui) {
 	this.gui = gui;
     }
-
-    public static Controller getInstance() {
-	return INSTANCE;
-    }
 }

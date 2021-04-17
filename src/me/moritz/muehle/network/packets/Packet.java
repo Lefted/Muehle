@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.prefs.AbstractPreferences;
 
-public abstract class Packet implements Serializable {
+public abstract class Packet implements Serializable, IPacket{
 
     private static final long serialVersionUID = 2021_04_11_1345L;
 

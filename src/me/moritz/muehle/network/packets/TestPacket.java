@@ -14,4 +14,8 @@ public class TestPacket extends Packet {
     public String getTestMsg() {
 	return testMsg;
     }
+
+    @Override
+    public void handle() {
+    }
 }

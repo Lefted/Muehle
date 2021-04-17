@@ -77,7 +77,7 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
     public void mousePressed(MouseEvent var1) {
 	if (Controller.INSTANCE.getGameHandler().isGameDone())
 	    return;
-	
+
 	boolean clickedVoid = true;
 
 	if (var1.getButton() == MouseEvent.BUTTON1) {

@@ -8,7 +8,7 @@ import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.network.packets.Packet;
 import me.moritz.muehle.network.packets.TestPacket;
 import me.moritz.muehle.states.playerstates.PlayerState;
-import me.moritz.muehle.states.playerstates.WaitState;
+import me.moritz.muehle.states.playerstates.RecievePacketsState;
 
 public abstract class NetworkHandler implements INetworkHandler {
 
@@ -26,7 +26,6 @@ public abstract class NetworkHandler implements INetworkHandler {
 	    connected = true;
 	    System.out.println("connected");
 
-	    sendPacket(new TestPacket("This is a test message"));
 	    while (connected) {
 		recievePacket();
 	    }
@@ -37,9 +36,6 @@ public abstract class NetworkHandler implements INetworkHandler {
     }
 
     public void sendPacket(Packet packet) {
-	// DEBUG
-	System.out.println(String.format("type %s", packet.getTypeId()));
-
 	try {
 	    outputStream.writeObject(packet);
 	} catch (IOException e) {
@@ -51,12 +47,11 @@ public abstract class NetworkHandler implements INetworkHandler {
     public void recievePacket() {
 	try {
 	    Packet packet = (Packet) inputStream.readObject();
-	    System.out.println(String.format("packet type %s", packet.getTypeId()));
 	    
 	    // pass packet to waiting state
 	    final PlayerState currState = Controller.INSTANCE.getGameHandler().getActivePlayer().getCurrentState();
-	    if (currState instanceof WaitState)
-		((WaitState)currState).onPacketRecieved(packet);
+	    if (currState instanceof RecievePacketsState)
+		((RecievePacketsState)currState).onPacketRecieved(packet);
 	    
 	} catch (IOException | ClassNotFoundException e) {
 	    e.printStackTrace();

@@ -3,8 +3,13 @@ package me.moritz.muehle.states.playerstates;
 import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.core.gamehandler.GameHandler;
+import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
+import me.moritz.muehle.network.NetworkHandler;
+import me.moritz.muehle.network.packets.PutPacket;
 
 public class PutState implements PlayerState {
 
@@ -14,6 +19,9 @@ public class PutState implements PlayerState {
 
 	if (point.getStone() == null) {
 	    final boolean createdMill = putStoneAndCheckForMill(point);
+
+	    // send packet if multiplayer
+	    trySendingPacket(point);
 
 	    if (activePlayer.getStonesPut() == 9) {
 		activePlayer.setCurrentState(PlayerStates.MOVE_STATE);
@@ -46,13 +54,27 @@ public class PutState implements PlayerState {
 	point.placeStone(activePlayer.getColor());
 	activePlayer.increaseStonesPut();
 	activePlayer.increaseStonesLeft();
-
+	
 	if (point.isInMill())
 	    return true;
 
 	return false;
     }
 
+    private void trySendingPacket(Point point) {
+	final GameHandler handler = Controller.INSTANCE.getGameHandler();
+	
+	if (handler instanceof SingleplayerGameHandler)
+	    return;
+	
+	final MultiplayerGameHandler
+	 multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
+	
+	
+	networkHandler.sendPacket(new PutPacket(point.getColumn(), point.getRow(), point.getCircle()));
+    }
+    
     @Override
     public void onVoidClicked() {
     }

@@ -15,6 +15,5 @@ public class JumpState extends MoveState {
     public void refreshStatus() {
 	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 	Controller.INSTANCE.getGui().setStatus(String.format("%s can jump with a stone", activePlayer.getColor().toString()));
-
     }
 }

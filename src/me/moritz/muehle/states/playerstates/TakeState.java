@@ -3,8 +3,15 @@ package me.moritz.muehle.states.playerstates;
 import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.core.gamehandler.GameHandler;
+import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
+import me.moritz.muehle.network.NetworkHandler;
+import me.moritz.muehle.network.packets.ChangeToJumpingStatePacket;
+import me.moritz.muehle.network.packets.TakePacket;
+import me.moritz.muehle.network.packets.WinPacket;
 
 public class TakeState implements PlayerState {
 
@@ -20,9 +27,12 @@ public class TakeState implements PlayerState {
 
 	if (isValid(point)) {
 	    takeStoneFromPoint(point);
+	    trySendingTakePacket(point);
+
 	    final boolean opponentLost = testForLose();
 
 	    if (opponentLost) {
+		trySendingWinPacket();
 		endGame();
 	    } else {
 		tryChangingOpponentToJumpingState();
@@ -71,6 +81,18 @@ public class TakeState implements PlayerState {
 	opponentPlayer.decreaseStonesLeft();
     }
 
+    private void trySendingTakePacket(Point point) {
+	final GameHandler handler = Controller.INSTANCE.getGameHandler();
+
+	if (handler instanceof SingleplayerGameHandler)
+	    return;
+
+	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
+
+	networkHandler.sendPacket(new TakePacket(point.getColumn(), point.getRow(), point.getCircle()));
+    }
+
     private boolean testForLose() {
 	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
 
@@ -114,14 +136,32 @@ public class TakeState implements PlayerState {
 	Controller.INSTANCE.getGameHandler().setGameDone(true);
     }
 
+    private void trySendingWinPacket() {
+	final GameHandler handler = Controller.INSTANCE.getGameHandler();
+
+	if (handler instanceof SingleplayerGameHandler)
+	    return;
+
+	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
+
+	networkHandler.sendPacket(new WinPacket(false));
+    }
+
     private void tryChangingOpponentToJumpingState() {
-	final Player opponentPlayer = Controller.INSTANCE.getGameHandler().getOpponentPlayer();
+	final GameHandler gameHandler = Controller.INSTANCE.getGameHandler();
+	final Player opponentPlayer = gameHandler.getOpponentPlayer();
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
+	    // if singleplayer change to jump state, (keep only listening to packets in multiplayer)
+	    if (!Controller.INSTANCE.getGameArguments().isMultiplayer())
+		opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
+	    else
+		((MultiplayerGameHandler) gameHandler).getNetworkHandler().sendPacket(new ChangeToJumpingStatePacket());
+
 	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor()
 		.toString()));
-	    opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
-	} else {
+
 	}
     }
 

@@ -3,9 +3,15 @@ package me.moritz.muehle.states.playerstates;
 import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.core.gamehandler.GameHandler;
+import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.models.Stone;
+import me.moritz.muehle.network.NetworkHandler;
+import me.moritz.muehle.network.packets.MoveJumpPacket;
+import me.moritz.muehle.network.packets.WinPacket;
 
 public class MoveState implements PlayerState {
 
@@ -28,6 +34,10 @@ public class MoveState implements PlayerState {
 
 		    // move the stone
 		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
+		    
+		    // send packet if multiplayer
+		    trySendingMovePacket(selectedPoint, point);
+		    
 		    if (createdMill) {
 			final boolean canTakeStone = TakeState.checkCanTakeStone();
 
@@ -46,6 +56,7 @@ public class MoveState implements PlayerState {
 		    } else {
 
 			if (isOpponentSuffocated()) {
+			    trySendingWinPacket();
 			    endGame();
 			}
 			Controller.INSTANCE.getGameHandler().changePlayers();
@@ -102,10 +113,34 @@ public class MoveState implements PlayerState {
 	return createdMill;
     }
 
+    private void trySendingMovePacket(Point origin, Point destination) {
+	final GameHandler handler = Controller.INSTANCE.getGameHandler();
+	
+	if (handler instanceof SingleplayerGameHandler)
+	    return;
+	
+	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
+	
+	networkHandler.sendPacket(new MoveJumpPacket(origin, destination));
+    }
+
+    private void trySendingWinPacket() {
+	final GameHandler handler = Controller.INSTANCE.getGameHandler();
+	
+	if (handler instanceof SingleplayerGameHandler)
+	    return;
+	
+	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
+	
+	networkHandler.sendPacket(new WinPacket(true));
+    }
+
     private void endGame() {
 	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
-	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game", activePlayer.getColor().toString()));
-	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game!", activePlayer.getColor().toString()));
+	Controller.INSTANCE.getGui().setStatus(String.format("%s has won the game (suffocated)", activePlayer.getColor().toString()));
+	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game! (suffocated)", activePlayer.getColor().toString()));
 	Controller.INSTANCE.getGameHandler().setGameDone(true);
     }
 

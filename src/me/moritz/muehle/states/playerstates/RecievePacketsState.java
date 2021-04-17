@@ -4,7 +4,7 @@ import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.network.packets.Packet;
 
-public class WaitState implements PlayerState {
+public class RecievePacketsState implements PlayerState {
 
     @Override
     public void onPointClicked(Point point) {
@@ -20,7 +20,10 @@ public class WaitState implements PlayerState {
     }
     
     public void onPacketRecieved(Packet packet) {
+	packet.handle();
 	
+	// update gui
+	Controller.INSTANCE.getGui().repaintGamePanel();
     }
     
     private void moveDone() {

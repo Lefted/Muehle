@@ -1,15 +1,13 @@
 package me.moritz.muehle.core.gamehandler;
 
-import java.util.stream.IntStream;
-
 import me.moritz.muehle.arguments.GameArguments;
 import me.moritz.muehle.core.Controller;
-import me.moritz.muehle.models.Color;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.network.ClientNetworkHandler;
 import me.moritz.muehle.network.NetworkHandler;
 import me.moritz.muehle.network.ServerNetworkHandler;
 import me.moritz.muehle.network.packets.ChangePlayerPacket;
+import me.moritz.muehle.network.packets.DisconnectPacket;
 import me.moritz.muehle.states.playerstates.PlayerStates;
 
 public class MultiplayerGameHandler extends GameHandler {
@@ -32,6 +30,9 @@ public class MultiplayerGameHandler extends GameHandler {
 
 	// start network therad
 	networkHandler.startThread();
+
+	// try disconnecting on shutdown
+	Runtime.getRuntime().addShutdownHook(new Thread(() -> networkHandler.disconnect(), "Shutdown Hook"));
     }
 
     @Override
@@ -43,10 +44,10 @@ public class MultiplayerGameHandler extends GameHandler {
 
 	// put own player into put state
 	players[args.getOwnPlayerIndex()].setCurrentState(PlayerStates.PUT_STATE);
-	
+
 	// put other player into recieve packets state
 	players[args.getOpponentPlayerIndex()].setCurrentState(PlayerStates.RECIEVE_PACKETS_STATE);
-	
+
 	activePlayerIdx = 0;
     }
 
@@ -61,7 +62,7 @@ public class MultiplayerGameHandler extends GameHandler {
 	// send packet
 	networkHandler.sendPacket(new ChangePlayerPacket());
     }
-    
+
     public void changePlayersWithoutSendingPacket() {
 	activePlayerIdx = activePlayerIdx == 0 ? 1 : 0;
 	getActivePlayer().getCurrentState().refreshStatus();

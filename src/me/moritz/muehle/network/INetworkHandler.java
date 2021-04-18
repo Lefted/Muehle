@@ -1,7 +1,5 @@
 package me.moritz.muehle.network;
 
-import me.moritz.muehle.network.packets.Packet;
-
 public interface INetworkHandler {
 
     /**
@@ -10,6 +8,8 @@ public interface INetworkHandler {
     void makeConnection();
 
     void closeConnection();
+    
+    void disconnect();
 
     String getThreadName();
 }

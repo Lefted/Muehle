@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.network.packets.DisconnectPacket;
 import me.moritz.muehle.network.packets.Packet;
-import me.moritz.muehle.network.packets.TestPacket;
 import me.moritz.muehle.states.playerstates.PlayerState;
 import me.moritz.muehle.states.playerstates.RecievePacketsState;
 
@@ -15,8 +15,8 @@ public abstract class NetworkHandler implements INetworkHandler {
     protected static volatile Thread thread;
 
     protected boolean connected;
-    protected ObjectInputStream inputStream;
-    protected ObjectOutputStream outputStream;
+    protected volatile ObjectInputStream inputStream;
+    protected volatile ObjectOutputStream outputStream;
 
     public void startThread() {
 	thread = new Thread(() -> {
@@ -24,9 +24,10 @@ public abstract class NetworkHandler implements INetworkHandler {
 	    makeConnection();
 
 	    connected = true;
-	    System.out.println("connected");
+	    System.out.println("Successfully connected!");
 
 	    while (connected) {
+
 		recievePacket();
 	    }
 
@@ -36,6 +37,9 @@ public abstract class NetworkHandler implements INetworkHandler {
     }
 
     public void sendPacket(Packet packet) {
+	if (!connected)
+	    return;
+
 	try {
 	    outputStream.writeObject(packet);
 	} catch (IOException e) {
@@ -44,18 +48,35 @@ public abstract class NetworkHandler implements INetworkHandler {
 	}
     }
 
-    public void recievePacket() {
+    private void recievePacket() {
 	try {
 	    Packet packet = (Packet) inputStream.readObject();
-	    
+
 	    // pass packet to waiting state
 	    final PlayerState currState = Controller.INSTANCE.getGameHandler().getActivePlayer().getCurrentState();
+
+	    // listen when in recieving state
 	    if (currState instanceof RecievePacketsState)
-		((RecievePacketsState)currState).onPacketRecieved(packet);
-	    
+		((RecievePacketsState) currState).onPacketRecieved(packet);
+	    // also handle disconnect packets at all time
+	    else if (packet instanceof DisconnectPacket)
+		((DisconnectPacket) packet).handle();
+
 	} catch (IOException | ClassNotFoundException e) {
-	    e.printStackTrace();
+
+	    if (connected)
+		System.out.println("Error while trying to recieve a packet");
 	}
+    }
+
+    @Override
+    public void disconnect() {
+
+	if (!connected)
+	    return;
+
+	sendPacket(new DisconnectPacket());
+	closeConnection();
     }
 
     public boolean isConnected() {

@@ -6,9 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import me.moritz.muehle.network.packets.Packet;
-import me.moritz.muehle.network.packets.TestPacket;
-
 public class ServerNetworkHandler extends NetworkHandler {
 
     private final String ip;
@@ -24,41 +21,13 @@ public class ServerNetworkHandler extends NetworkHandler {
 	this.port = port;
     }
 
-//    @Override
-//    public void sendPacket(Packet packet) {
-//	// DEBUG
-//	final String packetData = String.format("%s: %s", packet.getTypeId(), packet.getPayload());
-//	System.out.println(String.format("sending packet %s", packetData));
-//	
-//	try {
-//	    outputStream.writeObject(packet);
-//	} catch (IOException e) {
-//	    System.err.println(String.format("Error sending packet %s:%s", packet.getTypeId(), packet.getPayload()));
-//	    e.printStackTrace();
-//	}
-//    }
-
-//    private void onPacketRecieved(Packet packet) {
-//	System.out.println(String.format("recived packet: %s:%s", packet.getTypeId(), packet.getPayload()));
-//	System.out.println(Packet.getPacketClassbyTypeId(packet.getTypeId()).getName());
-//    }
-//
-//    private void listenForPacket() {
-//	try {
-//	    final Packet incomingPacket = (Packet) inputStream.readObject();
-//	    onPacketRecieved(incomingPacket);
-//	} catch (ClassNotFoundException | IOException e) {
-//	    e.printStackTrace();
-//	}
-//    }
-
     @Override
     public void makeConnection() {
 	try {
 	    // wait for client
 	    serverSocket = new ServerSocket(port);
 	    // DEBUG
-	    System.out.println("waiting for client...");
+	    System.out.println("Waiting for the client to connect...");
 	    client = serverSocket.accept();
 
 	    // setup io
@@ -71,15 +40,21 @@ public class ServerNetworkHandler extends NetworkHandler {
 	}
     }
 
-
     @Override
     public void closeConnection() {
-	// TODO
+	System.out.println("Closing connection");
+	connected = false;
+
+	try {
+	    serverSocket.close();
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+
     }
 
     @Override
     public String getThreadName() {
 	return "Server Network Thread";
     }
-
 }

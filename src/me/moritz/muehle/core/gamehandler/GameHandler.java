@@ -1,6 +1,5 @@
 package me.moritz.muehle.core.gamehandler;
 
-import me.moritz.muehle.core.Gui;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
 

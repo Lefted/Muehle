@@ -7,7 +7,6 @@ import me.moritz.muehle.network.ClientNetworkHandler;
 import me.moritz.muehle.network.NetworkHandler;
 import me.moritz.muehle.network.ServerNetworkHandler;
 import me.moritz.muehle.network.packets.ChangePlayerPacket;
-import me.moritz.muehle.network.packets.DisconnectPacket;
 import me.moritz.muehle.states.playerstates.PlayerStates;
 
 public class MultiplayerGameHandler extends GameHandler {

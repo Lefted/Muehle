@@ -1,18 +1,12 @@
 package me.moritz.muehle.core;
 
 import java.awt.EventQueue;
-import java.util.stream.IntStream;
 
 import me.moritz.muehle.arguments.ArgumentParser;
 import me.moritz.muehle.arguments.GameArguments;
 import me.moritz.muehle.core.gamehandler.GameHandler;
 import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
 import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
-import me.moritz.muehle.models.Color;
-import me.moritz.muehle.models.Player;
-import me.moritz.muehle.models.Point;
-import me.moritz.muehle.network.NetworkHandler;
-import me.moritz.muehle.states.playerstates.PlayerStates;
 
 public class Controller {
 

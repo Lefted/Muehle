@@ -1,11 +1,8 @@
 package me.moritz.muehle.network.packets;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.prefs.AbstractPreferences;
 
-public abstract class Packet implements Serializable, IPacket{
+public abstract class Packet implements Serializable, IPacket {
 
     private static final long serialVersionUID = 2021_04_11_1345L;
 

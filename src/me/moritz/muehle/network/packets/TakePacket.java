@@ -1,12 +1,9 @@
 package me.moritz.muehle.network.packets;
 
-import javax.swing.JOptionPane;
-
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
-import me.moritz.muehle.states.playerstates.PlayerStates;
 
 public class TakePacket extends Packet {
 
@@ -33,15 +30,6 @@ public class TakePacket extends Packet {
 
 	point.setStone(null);
 	opponentPlayer.decreaseStonesLeft();
-
-	// if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
-	// JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "You have only 3 stones left. You can now jump!");
-	// opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
-	//
-	// final String prefix = Controller.INSTANCE.getGameArguments().isServer() ? "Server" : "Client";
-	// System.out.println(String.format("[%s] set opponent player (%s) to jumping", prefix, opponentPlayer.getColor().toString()));
-	//
-	// }
     }
 
 }

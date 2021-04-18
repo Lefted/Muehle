@@ -53,17 +53,17 @@ public class GameArguments {
 	    return null;
 	}
     }
-    
-    public Color getOpponentColor()  {
+
+    public Color getOpponentColor() {
 	return getOwnColor() == Color.WHITE ? Color.BLACK : Color.WHITE;
     }
-    
+
     public int getOwnPlayerIndex() {
 	if (orderPosition == null) {
 	    System.err.println("-orderPosition argument not specified [first/second]. Exiting (1)");
 	    System.exit(1);
 	}
-	
+
 	if (orderPosition.equalsIgnoreCase("first"))
 	    return 0;
 	else if (orderPosition.equalsIgnoreCase("second"))
@@ -74,7 +74,7 @@ public class GameArguments {
 	    return -1;
 	}
     }
-    
+
     public int getOpponentPlayerIndex() {
 	return getOwnPlayerIndex() == 0 ? 1 : 0;
     }

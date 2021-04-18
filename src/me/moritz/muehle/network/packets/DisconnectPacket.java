@@ -6,7 +6,6 @@ import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
 import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
 import me.moritz.muehle.network.NetworkHandler;
-import me.moritz.muehle.network.ServerNetworkHandler;
 
 public class DisconnectPacket extends Packet {
 
@@ -26,7 +25,7 @@ public class DisconnectPacket extends Packet {
 	// close own connection
 	final NetworkHandler networkHandler = ((MultiplayerGameHandler) gameHandler).getNetworkHandler();
 	networkHandler.closeConnection();
-	
+
 	// show message
 	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "The other player has disconnected!");
     }

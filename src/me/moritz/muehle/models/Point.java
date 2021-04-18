@@ -3,7 +3,6 @@ package me.moritz.muehle.models;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.util.ResourceBundle.Control;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.utils.ImageUtils;
@@ -103,10 +102,10 @@ public class Point {
     }
 
     public boolean isInMill() {
-	
+
 	if (stone == null)
 	    return false;
-	
+
 	// check column
 	if (column != 1) {
 	    boolean isMillColumn = true;
@@ -172,7 +171,7 @@ public class Point {
 	}
 	return false;
     }
-    
+
     public int getX() {
 	return x;
     }

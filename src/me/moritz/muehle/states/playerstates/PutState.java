@@ -54,7 +54,7 @@ public class PutState implements PlayerState {
 	point.placeStone(activePlayer.getColor());
 	activePlayer.increaseStonesPut();
 	activePlayer.increaseStonesLeft();
-	
+
 	if (point.isInMill())
 	    return true;
 
@@ -63,18 +63,16 @@ public class PutState implements PlayerState {
 
     private void trySendingPacket(Point point) {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
-	
+
 	if (handler instanceof SingleplayerGameHandler)
 	    return;
-	
-	final MultiplayerGameHandler
-	 multiplayerHandler = ((MultiplayerGameHandler) handler);
+
+	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
-	
-	
+
 	networkHandler.sendPacket(new PutPacket(point.getColumn(), point.getRow(), point.getCircle()));
     }
-    
+
     @Override
     public void onVoidClicked() {
     }

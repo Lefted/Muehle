@@ -5,8 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import me.moritz.muehle.network.packets.DisconnectPacket;
-
 public class ClientNetworkHandler extends NetworkHandler {
 
     private final String ip;
@@ -44,7 +42,7 @@ public class ClientNetworkHandler extends NetworkHandler {
     public void closeConnection() {
 	System.out.println("Closing connection");
 	connected = false;
-	
+
 	try {
 	    server.close();
 	} catch (IOException e) {

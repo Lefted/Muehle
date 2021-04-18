@@ -1,7 +1,5 @@
 package me.moritz.muehle.models;
 
-import java.util.stream.IntStream;
-
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.states.playerstates.PlayerState;
 

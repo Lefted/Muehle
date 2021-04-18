@@ -9,12 +9,10 @@ public class ChangePlayerPacket extends Packet {
 
     public ChangePlayerPacket() {
 	super(TYPE_ID);
-	System.out.println("Sending ChangePlayerPacket");
     }
 
     @Override
     public void handle() {
-	System.out.println("Revieced ChangePlayersPacket");
 	((MultiplayerGameHandler) Controller.INSTANCE.getGameHandler()).changePlayersWithoutSendingPacket();
     }
 }

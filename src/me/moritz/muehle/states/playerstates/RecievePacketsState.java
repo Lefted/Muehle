@@ -18,14 +18,14 @@ public class RecievePacketsState implements PlayerState {
     public void refreshStatus() {
 	Controller.INSTANCE.getGui().setStatus("The other player is making a move..");
     }
-    
+
     public void onPacketRecieved(Packet packet) {
 	packet.handle();
-	
+
 	// update gui
 	Controller.INSTANCE.getGui().repaintGamePanel();
     }
-    
+
     private void moveDone() {
 	Controller.INSTANCE.getGameHandler().changePlayers();
     }

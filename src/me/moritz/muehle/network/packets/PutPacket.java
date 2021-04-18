@@ -26,7 +26,7 @@ public class PutPacket extends Packet {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 	final Point point = handler.getPointAt(column, row, circle);
 	final Player activePlayer = handler.getActivePlayer();
-	
+
 	point.placeStone(activePlayer.getColor());
 	activePlayer.increaseStonesPut();
 	activePlayer.increaseStonesLeft();

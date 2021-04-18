@@ -29,7 +29,7 @@ public class WinPacket extends Packet {
 	JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has won the game! %s", activePlayer.getColor().toString(),
 	    reason_phrase));
 	Controller.INSTANCE.getGameHandler().setGameDone(true);
-	
+
 	// TODO close sockets
     }
 

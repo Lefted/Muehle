@@ -34,10 +34,10 @@ public class MoveState implements PlayerState {
 
 		    // move the stone
 		    final boolean createdMill = moveStoneAndCheckForMill(selectedPoint, point);
-		    
+
 		    // send packet if multiplayer
 		    trySendingMovePacket(selectedPoint, point);
-		    
+
 		    if (createdMill) {
 			final boolean canTakeStone = TakeState.checkCanTakeStone();
 
@@ -115,25 +115,25 @@ public class MoveState implements PlayerState {
 
     private void trySendingMovePacket(Point origin, Point destination) {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
-	
+
 	if (handler instanceof SingleplayerGameHandler)
 	    return;
-	
+
 	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
-	
+
 	networkHandler.sendPacket(new MoveJumpPacket(origin, destination));
     }
 
     private void trySendingWinPacket() {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
-	
+
 	if (handler instanceof SingleplayerGameHandler)
 	    return;
-	
+
 	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
-	
+
 	networkHandler.sendPacket(new WinPacket(true));
     }
 

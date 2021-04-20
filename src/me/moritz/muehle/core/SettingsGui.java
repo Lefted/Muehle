@@ -207,6 +207,11 @@ public class SettingsGui {
 	onlineMultiplayerPanel.add(btnJoinGameclient, gbc_btnJoinGameclient);
 
 	final JButton btnHostGameserver = new JButton("Host Game (Server)");
+	btnHostGameserver.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerServerPanel");
+	    }
+	});
 	btnHostGameserver.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnHostGameserver = new GridBagConstraints();
 	gbc_btnHostGameserver.fill = GridBagConstraints.BOTH;
@@ -268,6 +273,7 @@ public class SettingsGui {
 
 	final JComboBox comboOnlineMultiplayerClientColor = new JComboBox();
 	comboOnlineMultiplayerClientColor.setModel(new DefaultComboBoxModel(Color.values()));
+	comboOnlineMultiplayerClientColor.setSelectedIndex(1);
 	GridBagConstraints gbc_comboOnlineMultiplayerClientColor = new GridBagConstraints();
 	gbc_comboOnlineMultiplayerClientColor.insets = new Insets(0, 0, 5, 5);
 	gbc_comboOnlineMultiplayerClientColor.fill = GridBagConstraints.HORIZONTAL;
@@ -278,6 +284,7 @@ public class SettingsGui {
 	final JButton btnOnlineMultiplayerClientConnect = new JButton("Connect");
 
 	final JCheckBox chckbxOnlineMultiplayerClientFirstMove = new JCheckBox("first move");
+	chckbxOnlineMultiplayerClientFirstMove.setSelected(true);
 	GridBagConstraints gbc_chckbxOnlineMultiplayerClientFirstMove = new GridBagConstraints();
 	gbc_chckbxOnlineMultiplayerClientFirstMove.anchor = GridBagConstraints.EAST;
 	gbc_chckbxOnlineMultiplayerClientFirstMove.insets = new Insets(0, 0, 5, 5);
@@ -293,6 +300,81 @@ public class SettingsGui {
 	gbc_btnOnlineMultiplayerClientConnect.gridy = 5;
 	onlineMultiplayerClientPanel.add(btnOnlineMultiplayerClientConnect, gbc_btnOnlineMultiplayerClientConnect);
 
+	final JPanel onlineMultiplayerServerPanel = new JPanel();
+	frame.getContentPane().add(onlineMultiplayerServerPanel, "onlineMultiplayerServerPanel");
+	GridBagLayout gbl_onlineMultiplayerServerPanel = new GridBagLayout();
+	gbl_onlineMultiplayerServerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+	gbl_onlineMultiplayerServerPanel.rowHeights = new int[] { 50, 0, 0, 0, 40, 0 };
+	gbl_onlineMultiplayerServerPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
+	gbl_onlineMultiplayerServerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+	onlineMultiplayerServerPanel.setLayout(gbl_onlineMultiplayerServerPanel);
+
+	final JLabel lblOnlineMultiplayerServerPort = new JLabel("port");
+	GridBagConstraints gbc_lblOnlineMultiplayerServerPort = new GridBagConstraints();
+	gbc_lblOnlineMultiplayerServerPort.insets = new Insets(0, 0, 5, 5);
+	gbc_lblOnlineMultiplayerServerPort.gridx = 1;
+	gbc_lblOnlineMultiplayerServerPort.gridy = 1;
+	onlineMultiplayerServerPanel.add(lblOnlineMultiplayerServerPort, gbc_lblOnlineMultiplayerServerPort);
+
+	final JSpinner spinnerOnlineMultiplayerServerPort = new JSpinner();
+	spinnerOnlineMultiplayerServerPort.setModel(new SpinnerNumberModel(new Integer(1224), new Integer(0), null, new Integer(1)));
+	GridBagConstraints gbc_spinnerOnlineMultiplayerServerPort = new GridBagConstraints();
+	gbc_spinnerOnlineMultiplayerServerPort.fill = GridBagConstraints.HORIZONTAL;
+	gbc_spinnerOnlineMultiplayerServerPort.insets = new Insets(0, 0, 5, 5);
+	gbc_spinnerOnlineMultiplayerServerPort.gridx = 2;
+	gbc_spinnerOnlineMultiplayerServerPort.gridy = 1;
+	onlineMultiplayerServerPanel.add(spinnerOnlineMultiplayerServerPort, gbc_spinnerOnlineMultiplayerServerPort);
+
+	final JLabel lblOnlineMultiplayerServerColor = new JLabel("Color");
+	GridBagConstraints gbc_lblOnlineMultiplayerServerColor = new GridBagConstraints();
+	gbc_lblOnlineMultiplayerServerColor.anchor = GridBagConstraints.EAST;
+	gbc_lblOnlineMultiplayerServerColor.insets = new Insets(0, 0, 5, 5);
+	gbc_lblOnlineMultiplayerServerColor.gridx = 1;
+	gbc_lblOnlineMultiplayerServerColor.gridy = 2;
+	onlineMultiplayerServerPanel.add(lblOnlineMultiplayerServerColor, gbc_lblOnlineMultiplayerServerColor);
+
+	final JComboBox comboOnlineMultiplayerServerColor = new JComboBox();
+	comboOnlineMultiplayerServerColor.setModel(new DefaultComboBoxModel(Color.values()));
+	GridBagConstraints gbc_comboOnlineMultiplayerServerColor = new GridBagConstraints();
+	gbc_comboOnlineMultiplayerServerColor.insets = new Insets(0, 0, 5, 5);
+	gbc_comboOnlineMultiplayerServerColor.fill = GridBagConstraints.HORIZONTAL;
+	gbc_comboOnlineMultiplayerServerColor.gridx = 2;
+	gbc_comboOnlineMultiplayerServerColor.gridy = 2;
+	onlineMultiplayerServerPanel.add(comboOnlineMultiplayerServerColor, gbc_comboOnlineMultiplayerServerColor);
+
+	final JCheckBox chckbxOnlineMultiplayerServerFirstMove = new JCheckBox("first move");
+	GridBagConstraints gbc_chckbxOnlineMultiplayerServerFirstMove = new GridBagConstraints();
+	gbc_chckbxOnlineMultiplayerServerFirstMove.insets = new Insets(0, 0, 5, 5);
+	gbc_chckbxOnlineMultiplayerServerFirstMove.anchor = GridBagConstraints.EAST;
+	gbc_chckbxOnlineMultiplayerServerFirstMove.gridx = 2;
+	gbc_chckbxOnlineMultiplayerServerFirstMove.gridy = 3;
+	onlineMultiplayerServerPanel.add(chckbxOnlineMultiplayerServerFirstMove, gbc_chckbxOnlineMultiplayerServerFirstMove);
+
+	final JButton btnNewButton_1 = new JButton("Start Server");
+	btnNewButton_1.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		// create arguments
+		final String port = String.valueOf(spinnerOnlineMultiplayerServerPort.getValue());
+		final Color onlineOwnColor = (Color) comboOnlineMultiplayerServerColor.getSelectedItem();
+		final String onlineStartsFirst = chckbxOnlineMultiplayerServerFirstMove.isSelected() ? "-onlineStartsFirst" : "";
+
+		final String[] args = { "-online", "-server", onlineStartsFirst, "-onlineOwnColor", onlineOwnColor.toString() , "-port", port};
+
+		// dispose the settings gui
+		frame.dispose();
+		// start the game according to the settings
+		Controller.main(args);
+	    }
+	});
+	btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+	gbc_btnNewButton_1.fill = GridBagConstraints.BOTH;
+	gbc_btnNewButton_1.gridwidth = 2;
+	gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
+	gbc_btnNewButton_1.gridx = 1;
+	gbc_btnNewButton_1.gridy = 4;
+	onlineMultiplayerServerPanel.add(btnNewButton_1, gbc_btnNewButton_1);
+
 	btnOnlineMultiplayerClientConnect.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		// create arguments for the game
@@ -301,7 +383,7 @@ public class SettingsGui {
 		final Color ownColor = (Color) comboOnlineMultiplayerClientColor.getSelectedItem();
 		final String onlineStartsFirst = chckbxOnlineMultiplayerClientFirstMove.isSelected() ? "-onlineStartsFirst" : "";
 
-		final String[] args = {"-online", "-ip", ip, "-port", String.valueOf(port), "-onlineOwnColor", ownColor.toString(), onlineStartsFirst };
+		final String[] args = { "-online", "-ip", ip, "-port", String.valueOf(port), "-onlineOwnColor", ownColor.toString(), onlineStartsFirst };
 
 		// dispose the settings frame
 		frame.dispose();

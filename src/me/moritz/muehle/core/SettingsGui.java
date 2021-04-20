@@ -83,6 +83,11 @@ public class SettingsGui {
 	mainPanel.add(btnLocalMultiplayerPanel, gbc_btnLocalMultiplayerPanel);
 
 	final JButton btnOnlineMultiplayerPanel = new JButton("Online Multiplayer");
+	btnOnlineMultiplayerPanel.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+		    ((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerPanel");
+		}
+	});
 	btnOnlineMultiplayerPanel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnOnlineMultiplayerPanel = new GridBagConstraints();
 	gbc_btnOnlineMultiplayerPanel.fill = GridBagConstraints.BOTH;
@@ -153,6 +158,33 @@ public class SettingsGui {
 	gbc_btnNewButton.gridx = 1;
 	gbc_btnNewButton.gridy = 5;
 	localMultiplayerPanel.add(btnNewButton, gbc_btnNewButton);
+	
+	final JPanel onlineMultiplayerPanel = new JPanel();
+	frame.getContentPane().add(onlineMultiplayerPanel, "onlineMultiplayerPanel");
+	GridBagLayout gbl_onlineMultiplayerPanel = new GridBagLayout();
+	gbl_onlineMultiplayerPanel.columnWidths = new int[]{125, 0, 125, 0};
+	gbl_onlineMultiplayerPanel.rowHeights = new int[]{0, 40, 8, 40, 0, 0};
+	gbl_onlineMultiplayerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+	gbl_onlineMultiplayerPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+	onlineMultiplayerPanel.setLayout(gbl_onlineMultiplayerPanel);
+	
+	final JButton btnJoinGameclient = new JButton("Join Game (Client)");
+	btnJoinGameclient.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	GridBagConstraints gbc_btnJoinGameclient = new GridBagConstraints();
+	gbc_btnJoinGameclient.fill = GridBagConstraints.BOTH;
+	gbc_btnJoinGameclient.insets = new Insets(0, 0, 5, 5);
+	gbc_btnJoinGameclient.gridx = 1;
+	gbc_btnJoinGameclient.gridy = 1;
+	onlineMultiplayerPanel.add(btnJoinGameclient, gbc_btnJoinGameclient);
+	
+	final JButton btnHostGameserver = new JButton("Host Game (Server)");
+	btnHostGameserver.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	GridBagConstraints gbc_btnHostGameserver = new GridBagConstraints();
+	gbc_btnHostGameserver.fill = GridBagConstraints.BOTH;
+	gbc_btnHostGameserver.insets = new Insets(0, 0, 5, 5);
+	gbc_btnHostGameserver.gridx = 1;
+	gbc_btnHostGameserver.gridy = 3;
+	onlineMultiplayerPanel.add(btnHostGameserver, gbc_btnHostGameserver);
     }
 
     private void postInitialize() {

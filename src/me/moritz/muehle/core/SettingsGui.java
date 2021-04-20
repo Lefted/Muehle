@@ -161,7 +161,7 @@ public class SettingsGui {
 	btnNewButton.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		// create the arguments for the game
-		final String localFirstPlayerColor = comboLocalFirstPlayerColor.getSelectedIndex() == 0 ? "white" : "black";
+		final String localFirstPlayerColor = comboLocalFirstPlayerColor.getSelectedIndex() == 1 ? "white" : "black";
 		final String[] args = { "-localFirstPlayerColor", localFirstPlayerColor };
 
 		// dispose the settings frame

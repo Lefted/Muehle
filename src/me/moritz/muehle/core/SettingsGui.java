@@ -84,9 +84,9 @@ public class SettingsGui {
 
 	final JButton btnOnlineMultiplayerPanel = new JButton("Online Multiplayer");
 	btnOnlineMultiplayerPanel.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-		    ((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerPanel");
-		}
+	    public void actionPerformed(ActionEvent arg0) {
+		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerPanel");
+	    }
 	});
 	btnOnlineMultiplayerPanel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnOnlineMultiplayerPanel = new GridBagConstraints();
@@ -105,6 +105,14 @@ public class SettingsGui {
 	gbl_localMultiplayerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 	localMultiplayerPanel.setLayout(gbl_localMultiplayerPanel);
 
+	final JLabel lblNewLabel = new JLabel("Note:\r\nThe first player has the first move");
+	GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+	gbc_lblNewLabel.anchor = GridBagConstraints.SOUTH;
+	gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+	gbc_lblNewLabel.gridx = 1;
+	gbc_lblNewLabel.gridy = 0;
+	localMultiplayerPanel.add(lblNewLabel, gbc_lblNewLabel);
+
 	final JLabel lblLocalFirstPlayer = new JLabel("First player");
 	GridBagConstraints gbc_lblLocalFirstPlayer = new GridBagConstraints();
 	gbc_lblLocalFirstPlayer.anchor = GridBagConstraints.EAST;
@@ -113,7 +121,6 @@ public class SettingsGui {
 	gbc_lblLocalFirstPlayer.gridy = 1;
 	localMultiplayerPanel.add(lblLocalFirstPlayer, gbc_lblLocalFirstPlayer);
 
-
 	final JComboBox comboLocalFirstPlayerColor = new JComboBox();
 	final JComboBox comboLocalSecondPlayerColor = new JComboBox();
 	comboLocalFirstPlayerColor.setModel(new DefaultComboBoxModel(Color.values()));
@@ -121,7 +128,7 @@ public class SettingsGui {
 	    final int otherIndex = comboLocalFirstPlayerColor.getSelectedIndex() == 0 ? 1 : 0;
 	    comboLocalSecondPlayerColor.setSelectedIndex(otherIndex);
 	});
-	
+
 	GridBagConstraints gbc_comboLocalFirstPlayerColor = new GridBagConstraints();
 	gbc_comboLocalFirstPlayerColor.insets = new Insets(0, 0, 5, 5);
 	gbc_comboLocalFirstPlayerColor.fill = GridBagConstraints.HORIZONTAL;
@@ -151,6 +158,18 @@ public class SettingsGui {
 	localMultiplayerPanel.add(comboLocalSecondPlayerColor, gbc_comboLocalSecondPlayerColor);
 
 	final JButton btnNewButton = new JButton("Start Game");
+	btnNewButton.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		// create the arguments for the game
+		final String localFirstPlayerColor = comboLocalFirstPlayerColor.getSelectedIndex() == 0 ? "white" : "black";
+		final String[] args = { "-localFirstPlayerColor", localFirstPlayerColor };
+
+		// dispose the settings frame
+		frame.dispose();
+		// run the game according to the settings
+		Controller.main(args);
+	    }
+	});
 	btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 	gbc_btnNewButton.fill = GridBagConstraints.BOTH;
@@ -158,16 +177,16 @@ public class SettingsGui {
 	gbc_btnNewButton.gridx = 1;
 	gbc_btnNewButton.gridy = 5;
 	localMultiplayerPanel.add(btnNewButton, gbc_btnNewButton);
-	
+
 	final JPanel onlineMultiplayerPanel = new JPanel();
 	frame.getContentPane().add(onlineMultiplayerPanel, "onlineMultiplayerPanel");
 	GridBagLayout gbl_onlineMultiplayerPanel = new GridBagLayout();
-	gbl_onlineMultiplayerPanel.columnWidths = new int[]{125, 0, 125, 0};
-	gbl_onlineMultiplayerPanel.rowHeights = new int[]{0, 40, 8, 40, 0, 0};
-	gbl_onlineMultiplayerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-	gbl_onlineMultiplayerPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+	gbl_onlineMultiplayerPanel.columnWidths = new int[] { 125, 0, 125, 0 };
+	gbl_onlineMultiplayerPanel.rowHeights = new int[] { 0, 40, 8, 40, 0, 0 };
+	gbl_onlineMultiplayerPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+	gbl_onlineMultiplayerPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 	onlineMultiplayerPanel.setLayout(gbl_onlineMultiplayerPanel);
-	
+
 	final JButton btnJoinGameclient = new JButton("Join Game (Client)");
 	btnJoinGameclient.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnJoinGameclient = new GridBagConstraints();
@@ -176,7 +195,7 @@ public class SettingsGui {
 	gbc_btnJoinGameclient.gridx = 1;
 	gbc_btnJoinGameclient.gridy = 1;
 	onlineMultiplayerPanel.add(btnJoinGameclient, gbc_btnJoinGameclient);
-	
+
 	final JButton btnHostGameserver = new JButton("Host Game (Server)");
 	btnHostGameserver.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnHostGameserver = new GridBagConstraints();

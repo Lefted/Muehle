@@ -40,7 +40,7 @@ public class Controller {
     }
 
     private void createGameHandler() {
-	gameHandler = gameArguments.isMultiplayer() ? new MultiplayerGameHandler() : new SingleplayerGameHandler();
+	gameHandler = gameArguments.isOnlineMultiplayer() ? new MultiplayerGameHandler() : new SingleplayerGameHandler();
     }
 
     public void setGameArguments(GameArguments gameArguments) {

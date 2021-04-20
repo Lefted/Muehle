@@ -4,25 +4,22 @@ import me.moritz.muehle.models.Color;
 
 public class GameArguments {
 
-    private boolean multiplayer = false;
-
+    private boolean online = false;
     private boolean server = false;
 
     private String ip = "127.0.0.1";
     private int port = 1223;
 
-    // own player info
-    /**
-     * "first" or "second". First player always starts out first.
-     */
-    private String orderPosition;
     /**
      * "white" or "black"
      */
-    private String ownColor;
+    private String onlineOwnColor;
+    private boolean onlineStartsFirst;
 
-    public boolean isMultiplayer() {
-	return multiplayer;
+    private String localFirstPlayerColor = "white";
+
+    public boolean isOnlineMultiplayer() {
+	return online;
     }
 
     public String getIp() {
@@ -37,18 +34,39 @@ public class GameArguments {
 	return server;
     }
 
+    public Color getLocalFirsPlayerColor() {
+	if (localFirstPlayerColor == null) {
+	    System.err.println("-localFirstPlayerColor argument not specified [white/black]. Exiting (1)");
+	    System.exit(1);
+	}
+
+	if (localFirstPlayerColor.equalsIgnoreCase("white"))
+	    return Color.WHITE;
+	else if (localFirstPlayerColor.equalsIgnoreCase("black"))
+	    return Color.BLACK;
+	else {
+	    System.err.println(String.format("Invalid value for argument -ownColor '%s' [white/black]. Exiting (1)", localFirstPlayerColor));
+	    System.exit(1);
+	    return null;
+	}
+    }
+
+    public Color getLocalSecondPlayerColor() {
+	return getLocalFirsPlayerColor() == Color.WHITE ? Color.BLACK : Color.WHITE;
+    }
+
     public Color getOwnColor() {
-	if (ownColor == null) {
+	if (onlineOwnColor == null) {
 	    System.err.println("-ownColor argument not specified [white/black]. Exiting (1)");
 	    System.exit(1);
 	}
 
-	if (ownColor.equalsIgnoreCase("white"))
+	if (onlineOwnColor.equalsIgnoreCase("white"))
 	    return Color.WHITE;
-	else if (ownColor.equalsIgnoreCase("black"))
+	else if (onlineOwnColor.equalsIgnoreCase("black"))
 	    return Color.BLACK;
 	else {
-	    System.err.println(String.format("Invalid value for argument -ownColor '%s' [white/black]. Exiting (1)", ownColor));
+	    System.err.println(String.format("Invalid value for argument -ownColor '%s' [white/black]. Exiting (1)", onlineOwnColor));
 	    System.exit(1);
 	    return null;
 	}
@@ -59,20 +77,7 @@ public class GameArguments {
     }
 
     public int getOwnPlayerIndex() {
-	if (orderPosition == null) {
-	    System.err.println("-orderPosition argument not specified [first/second]. Exiting (1)");
-	    System.exit(1);
-	}
-
-	if (orderPosition.equalsIgnoreCase("first"))
-	    return 0;
-	else if (orderPosition.equalsIgnoreCase("second"))
-	    return 1;
-	else {
-	    System.err.println(String.format("Invalid value for argument -orderPosition '%s' [first/second]. Exiting (1)", orderPosition));
-	    System.exit(1);
-	    return -1;
-	}
+	return onlineStartsFirst ? 0 : 1;
     }
 
     public int getOpponentPlayerIndex() {

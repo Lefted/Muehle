@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javax.swing.JOptionPane;
+
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.core.SettingsGui;
+import me.moritz.muehle.network.exceptions.UnsuccessfullConnectionException;
 import me.moritz.muehle.network.packets.DisconnectPacket;
 import me.moritz.muehle.network.packets.Packet;
 import me.moritz.muehle.states.playerstates.PlayerState;
@@ -21,13 +25,27 @@ public abstract class NetworkHandler implements INetworkHandler {
     public void startThread() {
 	thread = new Thread(() -> {
 
-	    makeConnection();
+	    try {
+		makeConnection();
 
-	    connected = true;
-	    System.out.println("Successfully connected!");
+		connected = true;
+		System.out.println("Successfully connected!");
+	    } catch (UnsuccessfullConnectionException e) {
+
+		// log error
+		System.err.println(String.format("Unable to connect to ip %s and port %s", e.getIp(), e.getPort()));
+
+		// close game gui
+		Controller.INSTANCE.getGui().dispose();
+
+		// go back to settings gui
+		SettingsGui.main(null);
+		
+		// show error on gui
+		JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("Unable to connect to %s %s", e.getIp(), e.getPort()));
+	    }
 
 	    while (connected) {
-
 		recievePacket();
 	    }
 

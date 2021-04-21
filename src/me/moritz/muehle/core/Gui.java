@@ -43,7 +43,7 @@ public class Gui extends JFrame {
     public void setStatus(String status) {
 	String prefix = null;
 
-	if (Controller.INSTANCE.getGameArguments().isMultiplayer())
+	if (Controller.INSTANCE.getGameArguments().isOnlineMultiplayer())
 	    prefix = Controller.INSTANCE.getGameArguments().isServer() ? "Mühle - Server" : "Mühle - Client";
 	else
 	    prefix = "Mühle -";

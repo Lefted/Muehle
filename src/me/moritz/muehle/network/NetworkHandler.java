@@ -45,7 +45,7 @@ public abstract class NetworkHandler implements INetworkHandler {
 		SettingsGui.getInstance().getFrame().setVisible(true);
 
 		// show error on gui
-		JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("Unable to connect to %s %s", e.getIp(), e.getPort()));
+		JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("Unable to connect to %s %s!", e.getIp(), e.getPort()), "Unsuccessful connection!", JOptionPane.ERROR_MESSAGE);
 	    }
 
 	    while (connected) {

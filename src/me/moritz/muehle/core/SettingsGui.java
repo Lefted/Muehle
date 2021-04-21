@@ -70,9 +70,9 @@ public class SettingsGui {
 	final JPanel mainPanel = new JPanel();
 	frame.getContentPane().add(mainPanel, "mainPanel");
 	GridBagLayout gbl_mainPanel = new GridBagLayout();
-	gbl_mainPanel.columnWidths = new int[] { 125, 0, 125, 0 };
+	gbl_mainPanel.columnWidths = new int[] { 125, 172, 125, 0 };
 	gbl_mainPanel.rowHeights = new int[] { 0, 40, 8, 40, 0, 0 };
-	gbl_mainPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+	gbl_mainPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
 	gbl_mainPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 	mainPanel.setLayout(gbl_mainPanel);
 
@@ -107,11 +107,24 @@ public class SettingsGui {
 	final JPanel localMultiplayerPanel = new JPanel();
 	frame.getContentPane().add(localMultiplayerPanel, "localMultiplayerPanel");
 	GridBagLayout gbl_localMultiplayerPanel = new GridBagLayout();
-	gbl_localMultiplayerPanel.columnWidths = new int[] { 150, 172, 0, 0 };
+	gbl_localMultiplayerPanel.columnWidths = new int[] { 1, 172, 0, 0 };
 	gbl_localMultiplayerPanel.rowHeights = new int[] { 70, 0, 0, 10, 35, 0 };
-	gbl_localMultiplayerPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
+	gbl_localMultiplayerPanel.columnWeights = new double[] { 1.0, 0.0, 2.0, Double.MIN_VALUE };
 	gbl_localMultiplayerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 	localMultiplayerPanel.setLayout(gbl_localMultiplayerPanel);
+
+	final JButton btnLocalMultiplayerPanelBack = new JButton("Back");
+	btnLocalMultiplayerPanelBack.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "mainPanel");
+	    }
+	});
+	GridBagConstraints gbc_btnLocalMultiplayerPanelBack = new GridBagConstraints();
+	gbc_btnLocalMultiplayerPanelBack.anchor = GridBagConstraints.NORTHWEST;
+	gbc_btnLocalMultiplayerPanelBack.insets = new Insets(0, 0, 5, 5);
+	gbc_btnLocalMultiplayerPanelBack.gridx = 0;
+	gbc_btnLocalMultiplayerPanelBack.gridy = 0;
+	localMultiplayerPanel.add(btnLocalMultiplayerPanelBack, gbc_btnLocalMultiplayerPanelBack);
 
 	final JLabel lblNewLabel = new JLabel("Note:\r\nThe first player has the first move");
 	GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -189,9 +202,9 @@ public class SettingsGui {
 	final JPanel onlineMultiplayerPanel = new JPanel();
 	frame.getContentPane().add(onlineMultiplayerPanel, "onlineMultiplayerPanel");
 	GridBagLayout gbl_onlineMultiplayerPanel = new GridBagLayout();
-	gbl_onlineMultiplayerPanel.columnWidths = new int[] { 125, 0, 125, 0 };
+	gbl_onlineMultiplayerPanel.columnWidths = new int[] { 1, 0, 1, 0 };
 	gbl_onlineMultiplayerPanel.rowHeights = new int[] { 0, 40, 8, 40, 0, 0 };
-	gbl_onlineMultiplayerPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+	gbl_onlineMultiplayerPanel.columnWeights = new double[] { 1.0, 1.0, 2.0, Double.MIN_VALUE };
 	gbl_onlineMultiplayerPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 	onlineMultiplayerPanel.setLayout(gbl_onlineMultiplayerPanel);
 
@@ -201,6 +214,19 @@ public class SettingsGui {
 		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerClientPanel");
 	    }
 	});
+
+	final JButton btnOnlineMultiplayerPanelBack = new JButton("Back");
+	btnOnlineMultiplayerPanelBack.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "mainPanel");
+	    }
+	});
+	GridBagConstraints gbc_btnOnlineMultiplayerPanelBack = new GridBagConstraints();
+	gbc_btnOnlineMultiplayerPanelBack.anchor = GridBagConstraints.NORTHWEST;
+	gbc_btnOnlineMultiplayerPanelBack.insets = new Insets(0, 0, 5, 5);
+	gbc_btnOnlineMultiplayerPanelBack.gridx = 0;
+	gbc_btnOnlineMultiplayerPanelBack.gridy = 0;
+	onlineMultiplayerPanel.add(btnOnlineMultiplayerPanelBack, gbc_btnOnlineMultiplayerPanelBack);
 	btnJoinGameclient.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnJoinGameclient = new GridBagConstraints();
 	gbc_btnJoinGameclient.fill = GridBagConstraints.BOTH;
@@ -226,11 +252,24 @@ public class SettingsGui {
 	final JPanel onlineMultiplayerClientPanel = new JPanel();
 	frame.getContentPane().add(onlineMultiplayerClientPanel, "onlineMultiplayerClientPanel");
 	GridBagLayout gbl_onlineMultiplayerClientPanel = new GridBagLayout();
-	gbl_onlineMultiplayerClientPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+	gbl_onlineMultiplayerClientPanel.columnWidths = new int[] { 0, 0, 0, 1, 0 };
 	gbl_onlineMultiplayerClientPanel.rowHeights = new int[] { 50, 0, 0, 30, 0, 40, 0, 0 };
-	gbl_onlineMultiplayerClientPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
+	gbl_onlineMultiplayerClientPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 2.0, Double.MIN_VALUE };
 	gbl_onlineMultiplayerClientPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 	onlineMultiplayerClientPanel.setLayout(gbl_onlineMultiplayerClientPanel);
+	
+	final JButton btnOnlineMultiplayerClientPanelBack = new JButton("Back");
+	btnOnlineMultiplayerClientPanelBack.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    ((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerPanel");
+		}
+	});
+	GridBagConstraints gbc_btnOnlineMultiplayerClientPanelBack = new GridBagConstraints();
+	gbc_btnOnlineMultiplayerClientPanelBack.anchor = GridBagConstraints.NORTHWEST;
+	gbc_btnOnlineMultiplayerClientPanelBack.insets = new Insets(0, 0, 5, 5);
+	gbc_btnOnlineMultiplayerClientPanelBack.gridx = 0;
+	gbc_btnOnlineMultiplayerClientPanelBack.gridy = 0;
+	onlineMultiplayerClientPanel.add(btnOnlineMultiplayerClientPanelBack, gbc_btnOnlineMultiplayerClientPanelBack);
 
 	final JLabel lblOnlineMultiplayerClientIp = new JLabel("ip");
 	GridBagConstraints gbc_lblOnlineMultiplayerClientIp = new GridBagConstraints();
@@ -308,9 +347,22 @@ public class SettingsGui {
 	GridBagLayout gbl_onlineMultiplayerServerPanel = new GridBagLayout();
 	gbl_onlineMultiplayerServerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
 	gbl_onlineMultiplayerServerPanel.rowHeights = new int[] { 50, 0, 0, 0, 40, 0 };
-	gbl_onlineMultiplayerServerPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
+	gbl_onlineMultiplayerServerPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, 2.0, Double.MIN_VALUE };
 	gbl_onlineMultiplayerServerPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 	onlineMultiplayerServerPanel.setLayout(gbl_onlineMultiplayerServerPanel);
+	
+	final JButton btnOnlineMultiplayerServerPanelBack = new JButton("Back");
+	btnOnlineMultiplayerServerPanelBack.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		    ((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "onlineMultiplayerPanel");
+		}
+	});
+	GridBagConstraints gbc_btnOnlineMultiplayerServerPanelBack = new GridBagConstraints();
+	gbc_btnOnlineMultiplayerServerPanelBack.anchor = GridBagConstraints.NORTHWEST;
+	gbc_btnOnlineMultiplayerServerPanelBack.insets = new Insets(0, 0, 5, 5);
+	gbc_btnOnlineMultiplayerServerPanelBack.gridx = 0;
+	gbc_btnOnlineMultiplayerServerPanelBack.gridy = 0;
+	onlineMultiplayerServerPanel.add(btnOnlineMultiplayerServerPanelBack, gbc_btnOnlineMultiplayerServerPanelBack);
 
 	final JLabel lblOnlineMultiplayerServerPort = new JLabel("port");
 	GridBagConstraints gbc_lblOnlineMultiplayerServerPort = new GridBagConstraints();
@@ -414,7 +466,7 @@ public class SettingsGui {
     public static SettingsGui getInstance() {
 	return instance;
     }
-    
+
     public JFrame getFrame() {
 	return frame;
     }

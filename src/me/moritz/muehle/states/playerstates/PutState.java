@@ -2,6 +2,8 @@ package me.moritz.muehle.states.playerstates;
 
 import javax.swing.JOptionPane;
 
+import org.omg.CORBA.CODESET_INCOMPATIBLE;
+
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
 import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
@@ -15,6 +17,13 @@ public class PutState implements PlayerState {
 
     @Override
     public void onPointClicked(Point point) {
+	// don't allow placing if online and not yet connected
+	if (Controller.INSTANCE.getGameHandler() instanceof MultiplayerGameHandler) {
+	    MultiplayerGameHandler handler = (MultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
+	    if (!handler.getNetworkHandler().isConnected())
+		return;
+	}
+
 	final Player activePlayer = Controller.INSTANCE.getGameHandler().getActivePlayer();
 
 	if (point.getStone() == null) {

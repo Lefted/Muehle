@@ -39,8 +39,11 @@ public abstract class NetworkHandler implements INetworkHandler {
 		Controller.INSTANCE.getGui().dispose();
 
 		// go back to settings gui
-		SettingsGui.main(null);
-		
+		// SettingsGui.main(null);
+
+		// show settings gui again
+		SettingsGui.getInstance().getFrame().setVisible(true);
+
 		// show error on gui
 		JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("Unable to connect to %s %s", e.getIp(), e.getPort()));
 	    }

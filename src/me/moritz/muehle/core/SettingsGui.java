@@ -27,6 +27,8 @@ import javax.swing.JCheckBox;
 
 public class SettingsGui {
 
+    private static SettingsGui instance;
+
     private JFrame frame;
     private JTextField txtFieldOnlineMultiplayerClientIp;
 
@@ -37,8 +39,9 @@ public class SettingsGui {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 		try {
-		    SettingsGui window = new SettingsGui();
-		    window.frame.setVisible(true);
+		    instance = new SettingsGui();
+		    instance.frame.setVisible(true);
+
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
@@ -358,10 +361,13 @@ public class SettingsGui {
 		final Color onlineOwnColor = (Color) comboOnlineMultiplayerServerColor.getSelectedItem();
 		final String onlineStartsFirst = chckbxOnlineMultiplayerServerFirstMove.isSelected() ? "-onlineStartsFirst" : "";
 
-		final String[] args = { "-online", "-server", onlineStartsFirst, "-onlineOwnColor", onlineOwnColor.toString() , "-port", port};
+		final String[] args = { "-online", "-server", onlineStartsFirst, "-onlineOwnColor", onlineOwnColor.toString(), "-port", port };
 
+		// REMOVE
 		// dispose the settings gui
-		frame.dispose();
+		// frame.dispose();
+		// hide the frame, note: it may be needed again if the connection fails
+		frame.setVisible(false);
 		// start the game according to the settings
 		Controller.main(args);
 	    }
@@ -405,4 +411,11 @@ public class SettingsGui {
 	SwingUtilities.updateComponentTreeUI(frame);
     }
 
+    public static SettingsGui getInstance() {
+	return instance;
+    }
+    
+    public JFrame getFrame() {
+	return frame;
+    }
 }

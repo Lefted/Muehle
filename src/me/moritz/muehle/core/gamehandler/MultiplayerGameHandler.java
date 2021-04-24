@@ -1,31 +1,27 @@
 package me.moritz.muehle.core.gamehandler;
 
-import me.moritz.muehle.arguments.GameArguments;
+import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.network.ClientNetworkHandler;
 import me.moritz.muehle.network.NetworkHandler;
 import me.moritz.muehle.network.ServerNetworkHandler;
 import me.moritz.muehle.network.packets.ChangePlayerPacket;
+import me.moritz.muehle.network.packets.GameArgumentsPacket;
 import me.moritz.muehle.states.playerstates.PlayerStates;
 
+// TODO: rename to OnlineMultiplayerGameHandler
 public class MultiplayerGameHandler extends GameHandler {
 
     private NetworkHandler networkHandler;
 
     @Override
     public void setupGame() {
-	final GameArguments args = Controller.INSTANCE.getGameArguments();
+	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
 
 	createPoints();
 
-	// create players
-	players = new Player[2];
-	players[args.getOwnPlayerIndex()] = new Player(args.getOwnColor());
-	players[args.getOpponentPlayerIndex()] = new Player(args.getOpponentColor());
-
-	networkHandler = Controller.INSTANCE.getGameArguments().isServer() ? new ServerNetworkHandler(args.getIp(), args.getPort())
-	    : new ClientNetworkHandler(args.getIp(), args.getPort());
+	networkHandler = args.isServer() ? new ServerNetworkHandler(args.getIp(), args.getPort()) : new ClientNetworkHandler(args.getIp(), args.getPort());
 
 	// start network therad
 	networkHandler.startThread();
@@ -35,19 +31,27 @@ public class MultiplayerGameHandler extends GameHandler {
     }
 
     @Override
-    public void initNewGame() {
-	final GameArguments args = Controller.INSTANCE.getGameArguments();
+    public void setupNewRound() {
+	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
 
 	gameDone = false;
 	removeStonesFromField();
 
-	// put own player into put state
-	players[args.getOwnPlayerIndex()].setCurrentState(PlayerStates.PUT_STATE);
+	// create players
+	players = new Player[2];
 
-	// put other player into recieve packets state
-	players[args.getOpponentPlayerIndex()].setCurrentState(PlayerStates.RECIEVE_PACKETS_STATE);
+	// players[0] own player players[1] other player
+	players[0] = new Player(args.getOwnPlayerColor());
+	players[1] = new Player(args.getOtherPlayerColor());
 
-	activePlayerIdx = 0;
+	// determine the active player
+	final boolean ownPlayerStarts = args.getFirstMoverColor() == args.getOwnPlayerColor();
+	activePlayerIdx = ownPlayerStarts ? 0 : 1;
+	
+	// own player instance starts in put state
+	players[0].setCurrentState(PlayerStates.PUT_STATE);
+	// other player instance always listens for packets
+	players[1].setCurrentState(PlayerStates.RECIEVE_PACKETS_STATE);
     }
 
     public NetworkHandler getNetworkHandler() {
@@ -65,5 +69,12 @@ public class MultiplayerGameHandler extends GameHandler {
     public void changePlayersWithoutSendingPacket() {
 	activePlayerIdx = activePlayerIdx == 0 ? 1 : 0;
 	getActivePlayer().getCurrentState().refreshStatus();
+    }
+
+    @Override
+    public boolean shouldSetupNewRound() {
+	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	// if information needed is already known (server) then a new round a be setup
+	return args.isHasGameArgs();
     }
 }

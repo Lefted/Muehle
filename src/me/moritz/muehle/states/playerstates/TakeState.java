@@ -154,7 +154,7 @@ public class TakeState implements PlayerState {
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
 	    // if singleplayer change to jump state, (keep only listening to packets in multiplayer)
-	    if (!Controller.INSTANCE.getGameArguments().isOnlineMultiplayer())
+	    if (!Controller.INSTANCE.getGameArguments().isOnline())
 		opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
 	    else
 		((MultiplayerGameHandler) gameHandler).getNetworkHandler().sendPacket(new ChangeToJumpingStatePacket());

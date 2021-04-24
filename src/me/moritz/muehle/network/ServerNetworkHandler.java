@@ -6,6 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
+import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.network.packets.GameArgumentsPacket;
+
 public class ServerNetworkHandler extends NetworkHandler {
 
     private final String ip;
@@ -26,7 +30,7 @@ public class ServerNetworkHandler extends NetworkHandler {
 	try {
 	    // wait for client
 	    serverSocket = new ServerSocket(port);
-	    // DEBUG
+	    
 	    System.out.println("Waiting for the client to connect...");
 	    client = serverSocket.accept();
 
@@ -51,6 +55,12 @@ public class ServerNetworkHandler extends NetworkHandler {
 	    e.printStackTrace();
 	}
 
+    }
+
+    public void sendGameArguments() {
+	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	final GameArgumentsPacket packet = new GameArgumentsPacket(args.getClientPlayerColor(), args.getServerPlayerColor(), args.getFirstMoverColor());
+	sendPacket(packet);
     }
 
     @Override

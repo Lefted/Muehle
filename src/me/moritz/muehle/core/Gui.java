@@ -6,6 +6,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
+
 public class Gui extends JFrame {
 
     public static final int PANE_SIZE = 850;
@@ -43,9 +45,10 @@ public class Gui extends JFrame {
     public void setStatus(String status) {
 	String prefix = null;
 
-	if (Controller.INSTANCE.getGameArguments().isOnlineMultiplayer())
-	    prefix = Controller.INSTANCE.getGameArguments().isServer() ? "Mühle - Server" : "Mühle - Client";
-	else
+	if (Controller.INSTANCE.getGameArguments().isOnline()) {
+	    final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	    prefix = args.isServer() ? "Mühle - Server" : "Mühle - Client";
+	} else
 	    prefix = "Mühle -";
 
 	setTitle(String.format("%s %s", prefix, status));

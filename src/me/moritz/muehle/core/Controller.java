@@ -18,19 +18,20 @@ public class Controller {
     private GameArguments gameArguments;
     private GameHandler gameHandler;
 
-    public static void main(String[] args) {
+    public static void entry(GameArguments args) {
 
-	INSTANCE.parseArguments(args);
+	INSTANCE.gameArguments = args;
 	INSTANCE.createGameHandler();
 
-	// create objects (doesn't prepare a new round to play)
 	INSTANCE.getGameHandler().setupGame();
 
 	// create the GUI (ensuring it lives on the Event-Dispatch-Thread)
 	EventQueue.invokeLater(() -> {
 	    final Gui gui = new Gui();
 	    INSTANCE.setGui(gui);
-	    INSTANCE.getGameHandler().initNewGame();
+
+	    if (INSTANCE.getGameHandler().shouldSetupNewRound())
+		INSTANCE.getGameHandler().setupNewRound();
 	});
     }
 
@@ -40,7 +41,7 @@ public class Controller {
     }
 
     private void createGameHandler() {
-	gameHandler = gameArguments.isOnlineMultiplayer() ? new MultiplayerGameHandler() : new SingleplayerGameHandler();
+	gameHandler = gameArguments.isOnline() ? new MultiplayerGameHandler() : new SingleplayerGameHandler();
     }
 
     public void setGameArguments(GameArguments gameArguments) {

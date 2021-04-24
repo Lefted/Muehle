@@ -9,28 +9,25 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import me.moritz.muehle.arguments.LocalMultiplayerGameArguments;
-import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
 import me.moritz.muehle.models.Color;
-import me.moritz.muehle.network.packets.GameArgumentsPacket;
-
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.SwingConstants;
+import me.moritz.muehle.settings.LocalMultiplayerGameSettings;
+import me.moritz.muehle.settings.OnlineMultiplayerGameSettings;
 
 public class SettingsGui {
 
@@ -190,11 +187,11 @@ public class SettingsGui {
 	btnStartLocalMultiplayerGame.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 
-		// create the arguments for the game
+		// create the settings for the game
 		final Color firstPlayerColor = (Color) comboLocalFirstPlayerColor.getSelectedItem();
 		final Color secondPlayerColor = (Color) comboLocalSecondPlayerColor.getSelectedItem();
 
-		final LocalMultiplayerGameArguments args = new LocalMultiplayerGameArguments(firstPlayerColor, secondPlayerColor);
+		final LocalMultiplayerGameSettings args = new LocalMultiplayerGameSettings(firstPlayerColor, secondPlayerColor);
 
 		// dispose the settings frame
 		frame.dispose();
@@ -450,37 +447,37 @@ public class SettingsGui {
 	onlineMultiplayerServerPanel.add(btnStartServer, gbc_btnStartServer);
 
 	btnStartServer.addActionListener((e) -> {
-	    // create arguments
+	    // create settings
 	    final int port = (int) spinnerOnlineMultiplayerServerPort.getValue();
 	    final Color onlineServerColor = (Color) comboOnlineMultiplayerServerColor.getSelectedItem();
 	    final Color onlineClientColor = (Color) comboOnlineMultiplayerClientColor.getSelectedItem();
 	    final Color firstMover = rdbtnOnlineMultiplayerFirstMoveClient.isSelected() ? onlineClientColor : onlineServerColor;
 
-	    final OnlineMultiplayerGameArguments args = new OnlineMultiplayerGameArguments(true, port);
-	    args.setServerPlayerColor(onlineServerColor);
-	    args.setClientPlayerColor(onlineClientColor);
-	    args.setFirstMover(firstMover);
-	    args.setHasGameArgs(true);
+	    final OnlineMultiplayerGameSettings settings = new OnlineMultiplayerGameSettings(true, port);
+	    settings.setServerPlayerColor(onlineServerColor);
+	    settings.setClientPlayerColor(onlineClientColor);
+	    settings.setFirstMover(firstMover);
+	    settings.setHasGameArgs(true);
 
 	    // hide the frame, note: it may be needed again if the connection fails
 	    frame.setVisible(false);
 	    // start the game according to the settings
-	    Controller.entry(args);
+	    Controller.entry(settings);
 	});
 
 	btnOnlineMultiplayerClientConnect.addActionListener((e) -> {
-	    // create arguments for the game
+	    // create settings for the game
 	    final String ip = txtFieldOnlineMultiplayerClientIp.getText();
 	    final int port = (int) spinnerOnlineMultiplayerClientPort.getValue();
 
-	    final OnlineMultiplayerGameArguments args = new OnlineMultiplayerGameArguments(false, port);
-	    args.setIp(ip);
+	    final OnlineMultiplayerGameSettings settings = new OnlineMultiplayerGameSettings(false, port);
+	    settings.setIp(ip);
 
 	    // dispose the settings frame
 	    frame.dispose();
 
 	    // start the game according to the settings
-	    Controller.entry(args);
+	    Controller.entry(settings);
 	});
     }
 

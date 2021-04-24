@@ -4,8 +4,8 @@ import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
-import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.LocalMultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.network.NetworkHandler;
@@ -84,10 +84,10 @@ public class TakeState implements PlayerState {
     private void trySendingTakePacket(Point point) {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 
-	if (handler instanceof SingleplayerGameHandler)
+	if (handler instanceof LocalMultiplayerGameHandler)
 	    return;
 
-	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final OnlineMultiplayerGameHandler multiplayerHandler = ((OnlineMultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
 
 	networkHandler.sendPacket(new TakePacket(point.getColumn(), point.getRow(), point.getCircle()));
@@ -139,10 +139,10 @@ public class TakeState implements PlayerState {
     private void trySendingWinPacket() {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 
-	if (handler instanceof SingleplayerGameHandler)
+	if (handler instanceof LocalMultiplayerGameHandler)
 	    return;
 
-	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final OnlineMultiplayerGameHandler multiplayerHandler = ((OnlineMultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
 
 	networkHandler.sendPacket(new WinPacket(false));
@@ -154,10 +154,10 @@ public class TakeState implements PlayerState {
 
 	if (opponentPlayer.getStonesPut() == 9 && opponentPlayer.getStonesLeft() < 4) {
 	    // if singleplayer change to jump state, (keep only listening to packets in multiplayer)
-	    if (!Controller.INSTANCE.getGameArguments().isOnline())
+	    if (!Controller.INSTANCE.getGameSettings().isOnline())
 		opponentPlayer.setCurrentState(PlayerStates.JUMP_STATE);
 	    else
-		((MultiplayerGameHandler) gameHandler).getNetworkHandler().sendPacket(new ChangeToJumpingStatePacket());
+		((OnlineMultiplayerGameHandler) gameHandler).getNetworkHandler().sendPacket(new ChangeToJumpingStatePacket());
 
 	    JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("%s has only 3 stones left. He can now jump!", opponentPlayer.getColor()
 		.toString()));

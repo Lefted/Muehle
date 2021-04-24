@@ -1,8 +1,8 @@
-package me.moritz.muehle.arguments;
+package me.moritz.muehle.settings;
 
 import me.moritz.muehle.models.Color;
 
-public class OnlineMultiplayerGameArguments extends GameArguments {
+public class OnlineMultiplayerGameSettings extends GameSettings {
 
     private final boolean server;
     private final int port;
@@ -16,7 +16,7 @@ public class OnlineMultiplayerGameArguments extends GameArguments {
 
     private Color firstMover;
 
-    public OnlineMultiplayerGameArguments(boolean server, int port) {
+    public OnlineMultiplayerGameSettings(boolean server, int port) {
 	super(true);
 
 	this.server = server;

@@ -6,13 +6,13 @@ import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
 
-import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.SettingsGui;
 import me.moritz.muehle.network.exceptions.UnsuccessfullConnectionException;
 import me.moritz.muehle.network.packets.DisconnectPacket;
-import me.moritz.muehle.network.packets.GameArgumentsPacket;
+import me.moritz.muehle.network.packets.GameSettingsPacket;
 import me.moritz.muehle.network.packets.Packet;
+import me.moritz.muehle.settings.OnlineMultiplayerGameSettings;
 import me.moritz.muehle.states.playerstates.PlayerState;
 import me.moritz.muehle.states.playerstates.RecievePacketsState;
 
@@ -40,7 +40,7 @@ public abstract class NetworkHandler implements INetworkHandler {
 		// wait for the game gui to be created on the edt thread
 		while (Controller.INSTANCE.getGui() == null) {
 		}
-		
+
 		// close the game gui
 		Controller.INSTANCE.getGui().dispose();
 
@@ -56,8 +56,8 @@ public abstract class NetworkHandler implements INetworkHandler {
 	    }
 
 	    if (this instanceof ServerNetworkHandler)
-		((ServerNetworkHandler) this).sendGameArguments();
-	    
+		((ServerNetworkHandler) this).sendGameSettings();
+
 	    while (connected) {
 		recievePacket();
 	    }
@@ -103,7 +103,7 @@ public abstract class NetworkHandler implements INetworkHandler {
     }
 
     private void processPacket(Packet packet) {
-	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	final OnlineMultiplayerGameSettings args = (OnlineMultiplayerGameSettings) Controller.INSTANCE.getGameSettings();
 
 	// handle disconnect packets
 	if (packet instanceof DisconnectPacket) {
@@ -111,9 +111,9 @@ public abstract class NetworkHandler implements INetworkHandler {
 	    return;
 	}
 
-	// recieve game arguments from server
+	// recieve game settings from server
 	if (!args.isHasGameArgs()) {
-	    if (packet instanceof GameArgumentsPacket) {
+	    if (packet instanceof GameSettingsPacket) {
 		packet.handle();
 	    }
 	    return;

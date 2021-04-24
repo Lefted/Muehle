@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.utils.ImageUtils;
 
@@ -77,9 +77,9 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
     public void mousePressed(MouseEvent var1) {
 	if (Controller.INSTANCE.getGameHandler().isGameDone())
 	    return;
-	
-	if (Controller.INSTANCE.getGameArguments().isOnline()) {
-	    final MultiplayerGameHandler handler = (MultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
+
+	if (Controller.INSTANCE.getGameSettings().isOnline()) {
+	    final OnlineMultiplayerGameHandler handler = (OnlineMultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
 	    if (!handler.getNetworkHandler().isConnected())
 		return;
 	}

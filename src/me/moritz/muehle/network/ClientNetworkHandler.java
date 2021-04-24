@@ -5,10 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
-
-import me.moritz.muehle.core.Controller;
-import me.moritz.muehle.core.SettingsGui;
 import me.moritz.muehle.network.exceptions.UnsuccessfullConnectionException;
 
 public class ClientNetworkHandler extends NetworkHandler {

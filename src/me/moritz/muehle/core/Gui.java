@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
+import me.moritz.muehle.settings.OnlineMultiplayerGameSettings;
 
 public class Gui extends JFrame {
 
@@ -45,8 +45,8 @@ public class Gui extends JFrame {
     public void setStatus(String status) {
 	String prefix = null;
 
-	if (Controller.INSTANCE.getGameArguments().isOnline()) {
-	    final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	if (Controller.INSTANCE.getGameSettings().isOnline()) {
+	    final OnlineMultiplayerGameSettings args = (OnlineMultiplayerGameSettings) Controller.INSTANCE.getGameSettings();
 	    prefix = args.isServer() ? "Mühle - Server" : "Mühle - Client";
 	} else
 	    prefix = "Mühle -";

@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.network.NetworkHandler;
 
 public class DisconnectPacket extends Packet {
@@ -19,11 +19,11 @@ public class DisconnectPacket extends Packet {
     public void handle() {
 	final GameHandler gameHandler = Controller.INSTANCE.getGameHandler();
 
-	if (!(gameHandler instanceof MultiplayerGameHandler))
+	if (!(gameHandler instanceof OnlineMultiplayerGameHandler))
 	    return;
 
 	// close own connection
-	final NetworkHandler networkHandler = ((MultiplayerGameHandler) gameHandler).getNetworkHandler();
+	final NetworkHandler networkHandler = ((OnlineMultiplayerGameHandler) gameHandler).getNetworkHandler();
 	networkHandler.closeConnection();
 
 	// show message

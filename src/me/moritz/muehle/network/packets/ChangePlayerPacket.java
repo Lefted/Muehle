@@ -1,7 +1,7 @@
 package me.moritz.muehle.network.packets;
 
 import me.moritz.muehle.core.Controller;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 
 public class ChangePlayerPacket extends Packet {
 
@@ -13,6 +13,6 @@ public class ChangePlayerPacket extends Packet {
 
     @Override
     public void handle() {
-	((MultiplayerGameHandler) Controller.INSTANCE.getGameHandler()).changePlayersWithoutSendingPacket();
+	((OnlineMultiplayerGameHandler) Controller.INSTANCE.getGameHandler()).changePlayersWithoutSendingPacket();
     }
 }

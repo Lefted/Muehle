@@ -1,10 +1,10 @@
 package me.moritz.muehle.network.packets;
 
-import me.moritz.muehle.arguments.OnlineMultiplayerGameArguments;
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Color;
+import me.moritz.muehle.settings.OnlineMultiplayerGameSettings;
 
-public class GameArgumentsPacket extends Packet {
+public class GameSettingsPacket extends Packet {
 
     public static final int TYPE_ID = 8;
 
@@ -13,7 +13,7 @@ public class GameArgumentsPacket extends Packet {
 
     private final Color firstMover;
 
-    public GameArgumentsPacket(Color clientPlayerColor, Color serverPlayerColor, Color firstMover) {
+    public GameSettingsPacket(Color clientPlayerColor, Color serverPlayerColor, Color firstMover) {
 	super(TYPE_ID);
 
 	System.out.println("sending game args");
@@ -24,9 +24,7 @@ public class GameArgumentsPacket extends Packet {
 
     @Override
     public void handle() {
-	// DEBUG
-	System.out.println("recieved game arguments");
-	final OnlineMultiplayerGameArguments args = (OnlineMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	final OnlineMultiplayerGameSettings args = (OnlineMultiplayerGameSettings) Controller.INSTANCE.getGameSettings();
 
 	args.setClientPlayerColor(clientPlayerColor);
 	args.setServerPlayerColor(serverPlayerColor);

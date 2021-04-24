@@ -4,8 +4,8 @@ import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
-import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.LocalMultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.models.Stone;
@@ -116,10 +116,10 @@ public class MoveState implements PlayerState {
     private void trySendingMovePacket(Point origin, Point destination) {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 
-	if (handler instanceof SingleplayerGameHandler)
+	if (handler instanceof LocalMultiplayerGameHandler)
 	    return;
 
-	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final OnlineMultiplayerGameHandler multiplayerHandler = ((OnlineMultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
 
 	networkHandler.sendPacket(new MoveJumpPacket(origin, destination));
@@ -128,10 +128,10 @@ public class MoveState implements PlayerState {
     private void trySendingWinPacket() {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 
-	if (handler instanceof SingleplayerGameHandler)
+	if (handler instanceof LocalMultiplayerGameHandler)
 	    return;
 
-	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final OnlineMultiplayerGameHandler multiplayerHandler = ((OnlineMultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
 
 	networkHandler.sendPacket(new WinPacket(true));

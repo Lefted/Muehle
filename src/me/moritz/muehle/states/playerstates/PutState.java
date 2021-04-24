@@ -2,12 +2,10 @@ package me.moritz.muehle.states.playerstates;
 
 import javax.swing.JOptionPane;
 
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
-
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.gamehandler.GameHandler;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
-import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.LocalMultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.network.NetworkHandler;
@@ -18,8 +16,8 @@ public class PutState implements PlayerState {
     @Override
     public void onPointClicked(Point point) {
 	// don't allow placing if online and not yet connected
-	if (Controller.INSTANCE.getGameHandler() instanceof MultiplayerGameHandler) {
-	    MultiplayerGameHandler handler = (MultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
+	if (Controller.INSTANCE.getGameHandler() instanceof OnlineMultiplayerGameHandler) {
+	    OnlineMultiplayerGameHandler handler = (OnlineMultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
 	    if (!handler.getNetworkHandler().isConnected())
 		return;
 	}
@@ -73,10 +71,10 @@ public class PutState implements PlayerState {
     private void trySendingPacket(Point point) {
 	final GameHandler handler = Controller.INSTANCE.getGameHandler();
 
-	if (handler instanceof SingleplayerGameHandler)
+	if (handler instanceof LocalMultiplayerGameHandler)
 	    return;
 
-	final MultiplayerGameHandler multiplayerHandler = ((MultiplayerGameHandler) handler);
+	final OnlineMultiplayerGameHandler multiplayerHandler = ((OnlineMultiplayerGameHandler) handler);
 	final NetworkHandler networkHandler = multiplayerHandler.getNetworkHandler();
 
 	networkHandler.sendPacket(new PutPacket(point.getColumn(), point.getRow(), point.getCircle()));

@@ -2,11 +2,10 @@ package me.moritz.muehle.core;
 
 import java.awt.EventQueue;
 
-import me.moritz.muehle.arguments.ArgumentParser;
-import me.moritz.muehle.arguments.GameArguments;
 import me.moritz.muehle.core.gamehandler.GameHandler;
-import me.moritz.muehle.core.gamehandler.MultiplayerGameHandler;
-import me.moritz.muehle.core.gamehandler.SingleplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.LocalMultiplayerGameHandler;
+import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
+import me.moritz.muehle.settings.GameSettings;
 
 public class Controller {
 
@@ -15,12 +14,12 @@ public class Controller {
 
     private Gui gui;
 
-    private GameArguments gameArguments;
+    private GameSettings gameSettings;
     private GameHandler gameHandler;
 
-    public static void entry(GameArguments args) {
+    public static void entry(GameSettings args) {
 
-	INSTANCE.gameArguments = args;
+	INSTANCE.gameSettings = args;
 	INSTANCE.createGameHandler();
 
 	INSTANCE.getGameHandler().setupGame();
@@ -35,21 +34,16 @@ public class Controller {
 	});
     }
 
-    private void parseArguments(String[] args) {
-	final ArgumentParser parser = new ArgumentParser(args);
-	gameArguments = parser.switchPojo(GameArguments.class);
-    }
-
     private void createGameHandler() {
-	gameHandler = gameArguments.isOnline() ? new MultiplayerGameHandler() : new SingleplayerGameHandler();
+	gameHandler = gameSettings.isOnline() ? new OnlineMultiplayerGameHandler() : new LocalMultiplayerGameHandler();
     }
 
-    public void setGameArguments(GameArguments gameArguments) {
-	this.gameArguments = gameArguments;
+    public void setGameSettings(GameSettings gameSettings) {
+	this.gameSettings = gameSettings;
     }
 
-    public GameArguments getGameArguments() {
-	return gameArguments;
+    public GameSettings getGameSettings() {
+	return gameSettings;
     }
 
     public GameHandler getGameHandler() {

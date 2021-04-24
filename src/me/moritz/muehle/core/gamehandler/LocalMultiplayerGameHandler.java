@@ -2,14 +2,13 @@ package me.moritz.muehle.core.gamehandler;
 
 import java.util.stream.IntStream;
 
-import me.moritz.muehle.arguments.LocalMultiplayerGameArguments;
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.models.Color;
 import me.moritz.muehle.models.Player;
+import me.moritz.muehle.settings.LocalMultiplayerGameSettings;
 import me.moritz.muehle.states.playerstates.PlayerStates;
 
-// TODO rename to LocalMultiplayerGameHandler
-public class SingleplayerGameHandler extends GameHandler {
+public class LocalMultiplayerGameHandler extends GameHandler {
 
     @Override
     public void setupGame() {
@@ -18,14 +17,14 @@ public class SingleplayerGameHandler extends GameHandler {
 	// create players
 	players = new Player[2];
 
-	final LocalMultiplayerGameArguments args = (LocalMultiplayerGameArguments) Controller.INSTANCE.getGameArguments();
+	final LocalMultiplayerGameSettings args = (LocalMultiplayerGameSettings) Controller.INSTANCE.getGameSettings();
 	final Color firstPlayerColor = args.getFirstPlayerColor();
 	final Color secondPlayerColor = args.getSecondPlayerColor();
 
 	players[0] = new Player(firstPlayerColor);
 	players[1] = new Player(secondPlayerColor);
     }
-    
+
     @Override
     public void setupNewRound() {
 	gameDone = false;

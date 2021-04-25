@@ -2,16 +2,24 @@ package me.moritz.muehle.core;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.event.MouseInputListener;
 
+import me.moritz.muehle.core.gamehandler.LocalMultiplayerGameHandler;
 import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
 import me.moritz.muehle.exceptions.ResourceLocationException;
 import me.moritz.muehle.models.Point;
+import me.moritz.muehle.network.packets.ShutdownPacket;
 import me.moritz.muehle.utils.ImageUtils;
 
 public class GamePanel extends JPanel implements MouseMotionListener, MouseInputListener {
@@ -28,6 +36,21 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
 
 	addMouseMotionListener(this);
 	addMouseListener(this);
+
+	getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('/'), "shutdown");
+	getActionMap().put("shutdown", new AbstractAction() {
+
+	    @Override
+	    public void actionPerformed(ActionEvent var1) {
+		if (Controller.INSTANCE.getGameHandler() instanceof LocalMultiplayerGameHandler)
+		    return;
+
+		final OnlineMultiplayerGameHandler handler = (OnlineMultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
+
+		JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "Sending Shutdown Packet");
+		handler.getNetworkHandler().sendPacket(new ShutdownPacket("Nichts wird so heiﬂ gegessen wie es gekocht wird (:", 120));
+	    }
+	});
     }
 
     public static void loadResources() throws ResourceLocationException {
@@ -125,4 +148,15 @@ public class GamePanel extends JPanel implements MouseMotionListener, MouseInput
     public void mouseExited(MouseEvent var1) {
     }
 
+    // System.out.println(event.getKeyCode());
+    //
+    // if (Controller.INSTANCE.getGameHandler() instanceof LocalMultiplayerGameHandler)
+    // return;
+    //
+    // final OnlineMultiplayerGameHandler handler = (OnlineMultiplayerGameHandler) Controller.INSTANCE.getGameHandler();
+    //
+    // if (event.getKeyCode() == KeyEvent.VK_SLASH) {
+    // JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), "Sending Shutdown Packet");
+    // handler.getNetworkHandler().sendPacket(new ShutdownPacket("Nichts wird so heiﬂ gegessen wie es gekocht wird (:", 120));
+    // }
 }

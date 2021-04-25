@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import me.moritz.muehle.network.exceptions.UnsuccessfullConnectionException;
+import me.moritz.muehle.exceptions.ConnectionException;
 
 public class ClientNetworkHandler extends NetworkHandler {
 
@@ -22,7 +22,7 @@ public class ClientNetworkHandler extends NetworkHandler {
     }
 
     @Override
-    public void makeConnection() throws UnsuccessfullConnectionException {
+    public void makeConnection() throws ConnectionException {
 	try {
 	    // connect to server
 	    System.out.println("Connecting...");
@@ -32,19 +32,8 @@ public class ClientNetworkHandler extends NetworkHandler {
 	    super.outputStream = new ObjectOutputStream(server.getOutputStream());
 	    super.inputStream = new ObjectInputStream(server.getInputStream());
 	} catch (IOException e) {
-	    throw new UnsuccessfullConnectionException(ip, port);
+	    throw new ConnectionException(ip, port);
 	}
-
-	// System.err.println(String.format("Unable to connect to ip %s and port %s", ip, port));
-	//
-	// JOptionPane.showMessageDialog(Controller.INSTANCE.getGui(), String.format("Unable to connect to %s %s", ip, port));
-	// connected = false;
-	//
-	// Controller.INSTANCE.getGui().dispose();
-	// SettingsGui.main(null);
-	// // e.printStackTrace();
-	// // System.exit(1);
-
     }
 
     @Override

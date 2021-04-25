@@ -2,13 +2,15 @@ package me.moritz.muehle.models;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import me.moritz.muehle.exceptions.ResourceLocationException;
 import me.moritz.muehle.utils.ImageUtils;
 
 public class Stone {
 
-    private static final BufferedImage imgBlackStone = ImageUtils.INSTANCE.loadImage("stone_black.png");
-    private static final BufferedImage imgWhiteStone = ImageUtils.INSTANCE.loadImage("stone_white.png");
+    private static BufferedImage imgBlackStone;
+    private static BufferedImage imgWhiteStone;
 
     private final Color color;
     private Point point;
@@ -37,5 +39,10 @@ public class Stone {
 
     public void setPoint(Point point) {
 	this.point = point;
+    }
+
+    public static void loadResources() throws ResourceLocationException {
+	imgBlackStone = ImageUtils.INSTANCE.loadImage("stone_black.png");
+	imgWhiteStone = ImageUtils.INSTANCE.loadImage("stone_white.png");
     }
 }

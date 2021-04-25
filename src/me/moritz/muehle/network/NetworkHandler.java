@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import me.moritz.muehle.core.Controller;
 import me.moritz.muehle.core.SettingsGui;
-import me.moritz.muehle.network.exceptions.UnsuccessfullConnectionException;
+import me.moritz.muehle.exceptions.ConnectionException;
 import me.moritz.muehle.network.packets.DisconnectPacket;
 import me.moritz.muehle.network.packets.GameSettingsPacket;
 import me.moritz.muehle.network.packets.Packet;
@@ -32,7 +32,7 @@ public abstract class NetworkHandler implements INetworkHandler {
 
 		connected = true;
 		System.out.println("Successfully connected!");
-	    } catch (UnsuccessfullConnectionException e) {
+	    } catch (ConnectionException e) {
 
 		// log error
 		System.err.println(String.format("Unable to connect to ip %s and port %s", e.getIp(), e.getPort()));

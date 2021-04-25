@@ -5,9 +5,12 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.exceptions.ResourceLocationException;
 import me.moritz.muehle.utils.ImageUtils;
 
 public class Point {
+
+    private static BufferedImage selectionImage;
 
     // [column][row][circle][0==x;1==y]
     public static final int[][][][] COORDINATES = { { { { 55, 45 }, { 166, 158 }, { 277, 268 } }, { { 55, 378 }, { 166, 378 }, { 277, 378 } }, { { 55, 708 }, {
@@ -29,7 +32,6 @@ public class Point {
     private boolean highlighted;
     final private Color highlightColor;
     final private Color nonHighlightColor;
-    private final BufferedImage selectionImg;
 
     private Stone stone;
 
@@ -43,8 +45,10 @@ public class Point {
 
 	highlightColor = new Color(255, 255, 204, 123);
 	nonHighlightColor = new Color(255, 255, 255, 0);
+    }
 
-	selectionImg = ImageUtils.INSTANCE.loadImage("selection.png");
+    public static void loadResources() throws ResourceLocationException {
+	selectionImage = ImageUtils.INSTANCE.loadImage("selection.png");
     }
 
     public void placeStone(me.moritz.muehle.models.Color color) {
@@ -75,8 +79,7 @@ public class Point {
 
 	// draw selection
 	if (stone != null && Controller.INSTANCE.getGameHandler().getActivePlayer().getSelectedPoint() == this)
-	    g.drawImage(selectionImg, x - 8, y - 8, null);
-
+	    g.drawImage(selectionImage, x - 8, y - 8, null);
     }
 
     public boolean isNeighbourTo(Point point) {

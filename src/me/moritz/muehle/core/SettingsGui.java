@@ -184,20 +184,17 @@ public class SettingsGui {
 	localMultiplayerPanel.add(comboLocalSecondPlayerColor, gbc_comboLocalSecondPlayerColor);
 
 	final JButton btnStartLocalMultiplayerGame = new JButton("Start Game");
-	btnStartLocalMultiplayerGame.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent arg0) {
+	btnStartLocalMultiplayerGame.addActionListener((e) -> {
+	    // create the settings for the game
+	    final Color firstPlayerColor = (Color) comboLocalFirstPlayerColor.getSelectedItem();
+	    final Color secondPlayerColor = (Color) comboLocalSecondPlayerColor.getSelectedItem();
 
-		// create the settings for the game
-		final Color firstPlayerColor = (Color) comboLocalFirstPlayerColor.getSelectedItem();
-		final Color secondPlayerColor = (Color) comboLocalSecondPlayerColor.getSelectedItem();
+	    final LocalMultiplayerGameSettings args = new LocalMultiplayerGameSettings(firstPlayerColor, secondPlayerColor);
 
-		final LocalMultiplayerGameSettings args = new LocalMultiplayerGameSettings(firstPlayerColor, secondPlayerColor);
-
-		// dispose the settings frame
-		frame.dispose();
-		// run the game according to the settings
-		Controller.entry(args);
-	    }
+	    // dispose the settings frame
+	    frame.dispose();
+	    // run the game according to the settings
+	    Controller.entry(args);
 	});
 	btnStartLocalMultiplayerGame.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	GridBagConstraints gbc_btnStartLocalMultiplayerGame = new GridBagConstraints();

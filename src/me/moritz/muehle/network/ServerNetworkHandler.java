@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import me.moritz.muehle.core.Controller;
+import me.moritz.muehle.exceptions.ConnectionException;
 import me.moritz.muehle.network.packets.GameSettingsPacket;
 import me.moritz.muehle.settings.OnlineMultiplayerGameSettings;
 
@@ -26,7 +27,7 @@ public class ServerNetworkHandler extends NetworkHandler {
     }
 
     @Override
-    public void makeConnection() {
+    public void makeConnection() throws ConnectionException {
 	try {
 	    // wait for client
 	    serverSocket = new ServerSocket(port);
@@ -38,9 +39,7 @@ public class ServerNetworkHandler extends NetworkHandler {
 	    super.outputStream = new ObjectOutputStream(client.getOutputStream());
 	    super.inputStream = new ObjectInputStream(client.getInputStream());
 	} catch (IOException e) {
-	    System.err.println("Unable to create server socket. Exiting (1)");
-	    e.printStackTrace();
-	    System.exit(1);
+	    throw new ConnectionException(ip, port);
 	}
     }
 

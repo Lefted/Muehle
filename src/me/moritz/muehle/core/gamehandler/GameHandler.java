@@ -1,7 +1,10 @@
 package me.moritz.muehle.core.gamehandler;
 
+import me.moritz.muehle.core.GamePanel;
+import me.moritz.muehle.exceptions.ResourceLocationException;
 import me.moritz.muehle.models.Player;
 import me.moritz.muehle.models.Point;
+import me.moritz.muehle.models.Stone;
 
 public abstract class GameHandler implements IGameHandler {
 
@@ -10,6 +13,12 @@ public abstract class GameHandler implements IGameHandler {
 
     protected int activePlayerIdx;
     protected boolean gameDone;
+    
+    public void loadResources() throws ResourceLocationException {
+	GamePanel.loadResources();
+	Point.loadResources();
+	Stone.loadResources();
+    }
 
     protected void createPoints() {
 	points = new Point[24];

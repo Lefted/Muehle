@@ -10,24 +10,28 @@ import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 import me.moritz.muehle.core.gamehandler.OnlineMultiplayerGameHandler;
+import me.moritz.muehle.exceptions.ResourceLocationException;
 import me.moritz.muehle.models.Point;
 import me.moritz.muehle.utils.ImageUtils;
 
 public class GamePanel extends JPanel implements MouseMotionListener, MouseInputListener {
 
-    private final BufferedImage background;
+    private static BufferedImage background;
     private final Color backgroundColor;
 
     private final Point[] points;
 
     public GamePanel() {
-	background = ImageUtils.INSTANCE.loadImage("background.png");
 	backgroundColor = new Color(0xFFFFCC);
 
 	this.points = Controller.INSTANCE.getGameHandler().getPoints();
 
 	addMouseMotionListener(this);
 	addMouseListener(this);
+    }
+
+    public static void loadResources() throws ResourceLocationException {
+	background = ImageUtils.INSTANCE.loadImage("background.png");
     }
 
     @Override

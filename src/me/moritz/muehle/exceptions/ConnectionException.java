@@ -1,11 +1,11 @@
-package me.moritz.muehle.network.exceptions;
+package me.moritz.muehle.exceptions;
 
-public class UnsuccessfullConnectionException extends Exception {
+public class ConnectionException extends Exception {
 
     private final String ip;
     private final int port;
 
-    public UnsuccessfullConnectionException(String ip, int port) {
+    public ConnectionException(String ip, int port) {
 	super();
 	this.ip = ip;
 	this.port = port;

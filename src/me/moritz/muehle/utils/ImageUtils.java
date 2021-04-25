@@ -16,10 +16,9 @@ public class ImageUtils {
 
     public BufferedImage loadImage(String path) throws ResourceLocationException {
 	try {
-	    final File file = new File(ClassLoader.getSystemResource(path).toURI());
 	    final InputStream input = ClassLoader.getSystemResourceAsStream(path);
 	    return ImageIO.read(input);
-	} catch (IOException | URISyntaxException e) {
+	} catch (IOException e) {
 	    System.err.println(String.format("Unable to load image from path %s", path));
 	    throw new ResourceLocationException(e, path);
 	}
